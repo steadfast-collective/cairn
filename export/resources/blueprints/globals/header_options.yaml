@@ -1,0 +1,15 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: button
+            field:
+              fullscreen: false
+              type: group
+              display: Button
+              fields:
+                -
+                  import: button

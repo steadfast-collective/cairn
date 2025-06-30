@@ -1,0 +1,9 @@
+{{ partial:page_builder/block }}
+    <div class="max-w-[1440px] px-5 py-8 xl:px-[88px] md:py-16 mx-auto grid md:grid-cols-2 gap-12 md:gap-[64px] items-center">
+        {{ partial:partials/text class="{(layout == 'left') ? 'md:order-1' : 'md:order-0'}" }}
+        <div class="flex flex-col gap-6 bg-grey-200 p-4 md:p-8 rounded-2xl {{(layout == 'left') ? 'md:order-0' : 'md:order-1'}}">
+            {{ partial:typography/h4 :content="title" }}
+            {{ partial:components/form }}
+        </div>
+    </div>
+{{ /partial:page_builder/block }}

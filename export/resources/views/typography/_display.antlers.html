@@ -1,0 +1,13 @@
+{{#
+    @name display
+    @desc The typography display partial to render an h1 with `class`, `as`, `color` and `content` attributes.
+    @param* content The content.
+    @param as The wrapping element. Defaults to `h1`.
+    @param weight Set a custom font weight utility. Falls back to `font-medium`.
+    @param color Set a custom text color utility. Falls back to `text-black`.
+    @param class Add custom CSS classes.
+#}}
+
+<!-- /typography/_display.antlers.html -->
+<{{ as or 'h1' }} class="text-[56px] leading-[64px] md:text-[80px] md:leading-[96px] {{ weight or 'font-medium' }} {{ color or 'text-black' }} {{ class }}">{{ content | nl2br }}</{{ as or 'h1' }}>
+<!-- End: /typography/_display.antlers.html -->

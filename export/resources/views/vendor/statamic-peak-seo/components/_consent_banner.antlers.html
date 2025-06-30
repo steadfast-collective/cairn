@@ -1,0 +1,265 @@
+{{#
+    @name Consent banner
+    @desc The consent banner component defined in `statamic-peak-seo::snippets/_seo.antlers.html` and yielded in `resources/views/layout.antlers.html`.
+#}}
+
+<!-- statamic-peak-seo::components/_consent_banner.antlers.html -->
+<div
+    id="consent-banner"
+    x-data="consentBanner"
+    x-show="!$store.consentBanner.getConsent()"
+    x-transition
+    class="consent-bar bg-grey-200 overflow-auto overscroll-contain fixed z-50 w-full h-min bottom-0 left-0 py-6 px-5 xl:py-10 xl:px-[88px]"
+    x-cloak
+>
+    <div class="flex flex-col items-start gap-6">
+        <div class="flex flex-col gap-2">
+            <h2 class="text-xl text-grey-800 font-semibold">{{ seo:cookie_banner_title }}</h2>
+            <div class="text-grey-800 text max-w-[1096px] w-full" x-show="!showCookieCategories">
+                {{ seo:cookie_banner_text }}
+            </div>
+            <div class="flex flex-wrap items-start gap-3" x-show="showCookieCategories" x-cloak>
+                <template x-for="type in $store.consentBanner.getConsentTypes()">
+                    <div class="max-w-[300px]">
+                        <label class="inline-flex">
+                            <template x-if="type.disabled">
+                                <input class="mr-2 w-4 h-4 rounded border-neutral text-primary focus:border-primary opacity-50" type="checkbox" :name="type.handle" checked disabled>
+                            </template>
+        
+                            <template x-if="!type.disabled">
+                                <input class="mr-2 w-4 h-4 rounded border-neutral text-primary focus:border-primary" type="checkbox" :name="type.handle" x-model="type.value">
+                            </template>
+        
+                            <span class="flex flex-col gap-0.5">
+                                <div class="flex gap-2">
+                                    <span class="font-bold text-sm" x-html="type.title"></span>        
+                                </div>
+                                <span class="text-sm" x-html="type.explanation"></span>
+                            </span>
+                        </label>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 w-full items-center" x-show="!showCookieCategories">
+            {{ partial:components/button
+                as="button"
+                label="Accept All Cookies"
+                size="sm"
+                full_width="true"
+                class="sm:w-max"
+            }}
+                {{ slot:attributes }}
+                    @click="$store.consentBanner.acceptAll()"
+                    type="button"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+            {{ partial:components/button
+                as="button"
+                label="Reject Additional Cookies"
+                size="sm"
+                full_width="true"
+                class="sm:w-max"
+            }}
+                {{ slot:attributes }}
+                    @click="$store.consentBanner.rejectAdditional()"
+                    type="button"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+
+            {{ partial:components/button
+                as="button"
+                label="View Cookies"
+                size="sm"
+                style="text"
+                class="justify-center w-max text-primary"
+            }}
+                {{ slot:attributes }}
+                    @click="showCookieCategories = true"
+                    type="button"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+        </div>
+
+        <div class="flex flex-wrap gap-4 w-full items-center" x-show="showCookieCategories"  x-cloak>
+            {{ partial:components/button
+                as="button"
+                label="Go back"
+                size="sm"
+                style="text"
+                class="justify-center w-max text-primary"
+            }}
+                {{ slot:attributes }}
+                    @click="showCookieCategories = false"
+                    type="button"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+            {{ partial:components/button
+                as="button"
+                label="Reject Additional Cookies"
+                size="sm"
+                full_width="true"
+                class="sm:w-max"
+            }}
+                {{ slot:attributes }}
+                    @click="$store.consentBanner.rejectAdditional()"
+                    type="button"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+            {{ partial:components/button
+                as="button"
+                label="Accept Selected Cookies"
+                size="sm"
+                full_width="true"
+                class="sm:w-max"
+            }}
+                {{ slot:attributes }}
+                    @click="$store.consentBanner.saveConsent()"
+                    type="button"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+        </div>
+
+        {{# Yield this section in `resources/layouts/_footer.antlers.html` so users can reset their consent. #}}
+        {{ section:reset_consent }}
+            <!-- statamic-peak-seo::components/_consent_Banner.antlers.html -->
+            {{ if seo:use_consent_banner }}
+                {{ if seo:manage_consent_page }}
+                {{# Read out global store consent status and display a reset consent link by saving the initial state. #}}
+                    <span x-data x-cloak class="text-xs">
+                        <span x-show="$store.consentBanner.getConsent()">
+                            <a class="{{ reset_consent_class ?? 'text-xs font-medium underline focus:outline-none focus-visible:ring focus-visible:ring-offset-2' }}" href="{{ seo:manage_consent_page:url }}">{{ trans:strings.consent_change_preferences }}</a>
+                        </span>
+                    </span>
+                {{ else }}
+                    <span x-data x-cloak class="text-xs">
+                        <span x-show="$store.consentBanner.getConsent()">
+                            <a @click.prevent="$store.consentBanner.revokeConsent()" class="{{ reset_consent_class ?? 'text-xs font-medium underline focus:outline-none focus-visible:ring focus-visible:ring-offset-2' }}" href="#">{{ trans:strings.consent_revoke }}</a>
+                        </span>
+                    </span>
+                {{ /if }}
+            {{ /if }}
+            <!-- End: statamic-peak-seo::components/_consent_Banner.antlers.html -->
+        {{ /section:reset_consent }}
+
+        {{ partial:statamic-peak-seo::snippets/consent_types }}
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('consentBanner', {
+                    data: Alpine.$persist(consentData).as('consentBanner{{ site:handle | title }}'),
+                    acceptAll() {
+                        this.data.types.forEach((type) => type.value = true)
+                        this.saveConsent()
+                    },
+                    rejectAdditional() {
+                        this.data.types.forEach((type) => type.value = false)
+                        this.saveConsent()
+                    },
+                    getConsent() {
+                        return this.data.consent
+                    },
+                    getConsentAPIValues() {
+                        return this.data.types.filter((type) => {
+                            return type['consent_api'] === true
+                        }).reduce((acc, type) => {
+                            acc[type.consent_api_handle] = type.value ? 'granted' : 'denied';
+                            return acc;
+                        }, {});
+                    },
+                    getCustomScripts() {
+                        return this.data.types.filter((type) => type.hasOwnProperty('script_fragments') && type.value);
+                    },
+                    getConsentDate() {
+                        return this.data.date
+                    },
+                    getConsentTypes() {
+                        return this.data.types
+                    },
+                    getConsentValue(handle) {
+                        return this.data.types.filter((type) => {
+                            return type['handle'] === handle
+                        })[0]['value']
+                    },
+                    invalidate() {
+                        this.data = consentData
+                    },
+                    rejectAll() {
+                        this.data.types.forEach((type) => type.value = false)
+                        this.saveConsent()
+                    },
+                    revokeConsent() {
+                        this.data.consent = false
+                        this.data.date = null
+                    },
+                    saveConsent() {
+                        this.data.consent = true
+                        this.data.date = Math.floor(Date.now() / 1000)
+                    },
+                    useConsentAPI()  {
+                        return this.data.consent_api
+                    },
+                    useCustomScripts()  {
+                        return this.data.custom_scripts
+                    },
+                    useEmbeds()  {
+                        return this.data.embeds
+                    }
+                })
+
+                Alpine.data('consentBanner', () => {
+                    return {
+                        data: Alpine.store('consentBanner').data,
+                        showCookieCategories: false,
+                        init() {
+                            {{ if seo:consent_revoke_before }}
+                                if (Alpine.store('consentBanner').getConsentDate() < '{{ seo:consent_revoke_before format="U" }}') {
+                                    Alpine.store('consentBanner').invalidate()
+                                }
+                            {{ /if }}
+                            if (Alpine.store('consentBanner').useConsentAPI() && Alpine.store('consentBanner').getConsent()) {
+                                gtag('consent', 'update', Alpine.store('consentBanner').getConsentAPIValues())
+                            }
+                            if (Alpine.store('consentBanner').useConsentAPI()) {
+                                this.$watch('data.consent', value => value && gtag('consent', 'update', Alpine.store('consentBanner').getConsentAPIValues()))
+                            }
+                            if (Alpine.store('consentBanner').useCustomScripts() && Alpine.store('consentBanner').getConsent()) {
+                                this.runCustomScripts()
+                            }
+                            if (Alpine.store('consentBanner').useCustomScripts()) {
+                                this.$watch('data.consent', value => value ? this.runCustomScripts() : this.removeCustomScripts())
+                            }
+                        },
+                        runCustomScripts() {
+                            Alpine.store('consentBanner')
+                                .getCustomScripts()
+                                .flatMap(script => script.script_fragments)
+                                .forEach(script => {
+                                    const tag = document.createElement('script')
+                                    script.type === 'script_tag'
+                                        ? tag.src = script.source
+                                        : tag.text = script.inline_script
+                                    tag.defer = script.defer
+                                    tag.async = script.async
+                                    script.attributes.forEach(attribute => tag.setAttribute(attribute.key, attribute.value))
+                                    document.head.appendChild(tag)
+                                    this.$el.addEventListener(`remove-custom-scripts-${script.category}`, () => tag.remove(), {once: true})
+                                })
+                        },
+                        removeCustomScripts() {
+                            Alpine.store('consentBanner')
+                                .getCustomScripts()
+                                .forEach(script => this.$dispatch(`remove-custom-scripts-${script.handle}`))
+                        }
+                    }
+                })
+            })
+        </script>
+    </div>
+</div>
+<!-- End: statamic-peak-seo::components/_consent_banner.antlers.html -->

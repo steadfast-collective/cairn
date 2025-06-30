@@ -1,0 +1,192 @@
+{{#
+    @name Main desktop navigation
+    @desc The sites main desktop navigation rendered on each page. It's 2 levels deep by default and uses AlpineJS for interactivity.
+#}}
+
+<!-- /navigation/_main_desktop.antlers.html -->
+<div class="flex items-center justify-between">
+    {{ partial:components/logo full="true" class="p-2" svgClass="w-[120px] h-8" }}
+
+    <nav class="hidden lg:block grow" aria-label="{{ trans:strings.main_navigation }}">
+        <ul class="flex items-center space-x-2 h-full justify-center">
+            {{ nav:main max_depth="2" include_home="false" select="title|url|mega_menu|enable_mega_menu|description" }}
+                <li
+                    {{ if children }}
+                        x-data="{ subnavOpen: false }"
+                        @keyup.escape.stop.prevent="subnavOpen = false"
+                        @mouseover.away="subnavOpen = false"
+                        @focusin="subnavOpen = true"
+                        @focusout="subnavOpen = false"
+                    {{ /if }}
+                    class="leading-none h-full flex flex-none"
+                >
+                    <a
+                        class="
+                            px-3 py-9 text-black font-normal flex flex-nowrap items-center text-base hover:opacity-100 focus:opacity-100 focus:outline-none focus-visible:ring-2 ring-primary
+                            {{ is_current || is_parent
+                                ? 'opacity-100'
+                                : 'opacity-75' }}
+                        "
+                        href="{{ url }}"
+                        {{ if children }}
+                            @mouseover="subnavOpen = true"
+                            @click.prevent="subnavOpen = true"
+                            :aria-label="subnavOpen
+                                ? '{{ trans:strings.subnav_close }}'
+                                : '{{ trans:strings.subnav_open }}'"
+                            :aria-expanded="subnavOpen"
+                            {{ is_current ?= 'aria-current="page"' }}
+                            :class="{
+                                'opacity-100': subnavOpen,
+                            }"
+                        {{ /if }}
+                    >
+                        {{ title }}
+                        {{ if children }}
+                            <div :class="{ 'scale-y-[-1]': subnavOpen }" class="motion-safe:transition-transform">
+                                {{ svg:chevron-down class="size-4 ml-2 overflow-visible stroke-current " aria-hidden="true" }}
+                            </div>
+                        {{ /if }}
+                    </a>
+                    {{ if children }}
+                        <div
+                            x-show="subnavOpen"
+                            x-ref="subnav"
+                            class="absolute left-0 top-full w-full h-screen bg-black/50"
+                            @click.outside="subnavOpen = false"
+                            x-transition.opacity
+                            x-cloak
+                        >
+                            <div class="{{ enable_mega_menu && mega_menu:call_to_action:image ? 'max-w-[1260px] xl:px-[88px]' : 'max-w-[880px]' }} px-6 w-full mx-auto flex  gap-8 items-start bg-grey-100 rounded-b-2xl">
+                                <div class="flex flex-col gap-4 w-full py-6">
+                                    {{ if enable_mega_menu }}
+                                        <div class="pb-4 flex gap-1 items-end border-b border-grey-500">
+                                            {{ if mega_menu:title or mega_menu:description }}
+                                                <div class="flex flex-col gap-1">
+                                                    {{ if mega_menu:title }}
+                                                        <p class="text-xl font-semibold text-black">{{ mega_menu:title }}</p>
+                                                    {{ /if }}
+
+                                                    {{ if mega_menu:description }}
+                                                        <p class="text-grey-600 font-normal text-sm">{{ mega_menu:description }} </p>
+                                                    {{ /if }}
+                                                </div>
+                                            {{ /if }}
+
+                                            {{ if mega_menu:button:link }}
+                                                {{ partial:components/button
+                                                    :label="mega_menu:button:label ?? mega_menu:button:link:title"
+                                                    :url="mega_menu:button:link"
+                                                    size="sm"
+                                                    class="ml-auto mr-0"
+                                                }}
+
+                                            {{ /if }}
+                                        </div>
+                                    {{ /if }}
+
+                                    <ul class="w-full grid grid-cols-2 gap-y-2">
+                                        {{ children }}
+                                            <li>
+                                                <a
+                                                    class="
+                                                        h-full p-3 rounded-lg flex flex-col gap-1 group focus:outline-none motion-safe:transition-colors text-base font-semibold text-brand-grey-900-new
+                                                    "
+                                                    href="{{ url }}"
+                                                >
+                                                    <span class="group-hover:underline underline-offset-2 group-focus-visible:underline {{ is_current ?= 'underline' }}">
+                                                        {{ title }}
+                                                    </span>
+
+                                                    {{ if description }}
+                                                        <p class="text-sm font-normal text-grey-600 font-inter">{{ description }}</p>
+                                                    {{ /if }}
+                                                </a>
+                                            </li>
+                                        {{ /children }}
+                                    </ul>
+                                </div>
+
+                                {{ if enable_mega_menu && mega_menu:call_to_action:image }}
+                                    <div class="py-6 shrink-0">
+                                        <{{ mega_menu:call_to_action:link ? 'a' : 'div' }}
+                                            class="{{ mega_menu:call_to_action:link ?= 'group/a' }}"
+                                            {{ if mega_menu:call_to_action:link }}
+                                                href="{{ mega_menu:call_to_action:link }}"
+                                            {{ /if }}
+                                        >
+                                            <div class="relative">
+                                                <picture>
+                                                    <source srcset="{{ glide :src="mega_menu:call_to_action:image" format="webp" dpr="2" q="70" width="296" height="372" fit="crop_focal" }}" type="image/webp">
+                                                    <source srcset="{{ glide :src="mega_menu:call_to_action:image" dpr="2" q="70" width="296" height="372" fit="crop_focal" }}" type="image/png">
+                                                    <img
+                                                        src="{{ glide :src="mega_menu:call_to_action:image" dpr="2" q="70" width="296" height="372" fit="crop_focal" }}"
+                                                        alt="{{ img:alt }}"
+                                                        width="296"
+                                                        height="371"
+                                                        class="flex flex-none object-cover rounded-3xl w-[296px] h-[372px]"
+                                                        loading="lazy"
+                                                    />
+                                                </picture>
+
+                                                <div class="rounded-3xl absolute top-0 left-0 w-full h-full p-6 flex flex-col justify-between bg-black/30 motion-safe:transition">
+                                                    <div class="flex flex-col gap-2 text-white">
+                                                        <p class="text-2xl font-bold">{{ mega_menu:call_to_action:title }}</p>
+                                                        <p class="font-inter text-lg">{{ mega_menu:call_to_action:description }} </p>
+                                                    </div>
+
+                                                    {{ partial:components/icon_button
+                                                        :label="mega_menu:call_to_action:title"
+                                                        icon="arrow-right"
+                                                        class="ml-auto mr-0 group-hover/a:bg-primary-400"
+                                                        color="primary"
+                                                        style="filled"
+                                                        size="lg"
+                                                        as="div"
+                                                    }}
+                                                </div>
+                                            </div>
+                                        </{{ mega_menu:call_to_action:link ? 'a' : 'div' }}>
+                                    </div>
+                                {{ /if }}
+                            </div>
+
+                        </div>
+
+                    {{ /if }}
+                </li>
+            {{ /nav:main }}
+        </ul>
+    </nav>
+
+    {{# mobile toggle #}}
+    <button
+        class="flex flex-none lg:hidden w-11 h-11 bg-primary-100 rounded-full items-center justify-center"
+        @click.prevent="mobileNavOpen = !mobileNavOpen"
+        :aria-label="
+        mobileNavOpen
+            ? '{{ trans:strings.nav_close }}'
+            : '{{ trans:strings.nav_open }}'
+        "
+        :aria-expanded="mobileNavOpen"
+    >
+        {{ svg:menu-01 class="size-4 text-primary-500" }}
+    </button>
+
+    {{
+        partial:components/button
+        class="!hidden lg:!inline-flex ml-auto mr-0"
+        :label="header_options:button:label"
+        :layout="header_options:button:layout"
+        :style="header_options:button:style"
+        :link_type="header_options:button:link_type"
+        :target_blank="header_options:button:target_blank"
+        :url="header_options:button:url"
+        :entry="header_options:button:entry"
+        :email="header_options:button:email"
+        :tel="header_options:button:tel"
+        :asset="header_options:button:asset"
+        size="lg"
+    }}
+</div>
+<!-- End: /navigation/_main_desktop.antlers.html -->

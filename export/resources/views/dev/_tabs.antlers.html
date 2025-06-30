@@ -1,0 +1,30 @@
+{{ partial:components/tabs/tabs
+    :active_tab="1"
+}}
+    {{ slot:buttons }}
+        {{ partial:components/tabs/button
+            title="Tab 1"
+        }}
+
+        {{ partial:components/tabs/button
+            title="Tab 2"
+        }}
+    {{ /slot:buttons }}
+
+    {{ slot:panels }}
+        {{ partial:components/tabs/panel }}
+            {{ partial:typography/h3 content="Tab 1" }}
+            <p class="text-grey-600">This is the content for tab 1.</p>
+        {{ /partial:components/tabs/panel }}
+
+        {{ partial:components/tabs/panel }}
+            {{ partial:typography/h3 content="Tab 2" }}
+            <p class="text-grey-600">This is the content for tab 2.</p>
+
+            {{ partial:components/button
+                label="A Button"
+                class="mt-4"
+            }}
+        {{ /partial:components/tabs/panel }}
+    {{ /slot:panels }}
+{{ /partial:components/tabs/tabs }}

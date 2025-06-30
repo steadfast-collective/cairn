@@ -1,0 +1,34 @@
+{{#
+    @name Prose
+    @desc The typography prose partial to render a prose object with `class` attribute.
+    @param as The wrapping element. Defaults to `article`.
+    @param class Add custom CSS classes.
+#}}
+
+<!-- /typography/_prose.antlers.html -->
+<{{ as or 'article' }}
+    class="
+        prose
+        prose-p:my-4
+        prose-a:underline
+        prose-a:decoration-primary
+        prose-a:decoration-2
+        prose-a:hover:text-primary
+        prose-figure:my-0
+        prose-lead:leading-[28px]
+        prose-pre:whitespace-pre-wrap
+        prose-headings:font-semibold
+        prose-headings:mb-8
+        prose-headings:mt-10
+        prose-h1:text-5xl prose-h1:md:text-[64px] prose-h1:md:leading-[72px]
+        prose-h2:text-[40px] prose-h2:leading-[48px] prose-h2:md:text-5xl
+        prose-h3:text-[32px] prose-h3:leading-[40px] prose-h3:md:text-[40px] prose-h3:md:leading-[48px]
+        prose-h4:text-2xl prose-h4:md:text-[32px] prose-h4:md:leading-[40px]
+        prose-h5:text-[22px] prose-h5:leading-[30px] prose-h5:md:text-2xl
+        max-w-none
+        {{ class }}
+    "
+>
+    {{ slot }}
+</{{ as or 'article' }}>
+<!-- End: /typography/_prose.antlers.html -->

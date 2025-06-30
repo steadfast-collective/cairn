@@ -1,0 +1,13 @@
+tree:
+  -
+    id: 80b0ec6a-fe54-4cd1-9b06-06f44c6a0823
+    title: 'Terms & Conditions'
+    url: '#'
+  -
+    id: 35db2a26-f9f9-403c-9ad9-341a582b40e3
+    title: 'Privacy Policy'
+    url: '#'
+  -
+    id: 256363f3-860c-498d-9b2e-06fb6beb1c67
+    title: 'Cookies Policy'
+    url: '#'

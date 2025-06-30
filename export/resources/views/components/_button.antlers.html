@@ -1,0 +1,66 @@
+{{#
+    @name Button attributes
+    @desc A single button component. Faux is used when a button is displayed inside a link (for example in link blocks).
+    @param* label The caption label.
+    @param as The wrapping element. Defaults to `a`.
+    @param faux Boolean. For faux button wrapped in an actual button/anchor.
+#}}
+
+<!-- /components/_button.antlers.html -->
+
+{{ size = size ?? 'lg' }}
+{{ color = color ?? 'primary' }}
+{{ style = style ?? 'filled' }}
+
+{{ if label }}
+    <{{ as or 'a' }}
+        class="
+            inline-flex items-center gap-2 font-medium motion-safe:transition outline-offset-2 disabled:opacity-50
+            {{ style === 'filled' ?= 'rounded-xl' }}
+            {{ switch(
+                (style === 'filled' && color === 'primary') => 'bg-primary hover:bg-primary-400 text-grey-100 focus:bg-primary-400 focus:outline-primary-400 disabled:hover:bg-primary',
+                (style === 'filled' && color === 'secondary') => 'bg-primary-100 hover:bg-primary-200/50 text-primary-500 focus:bg-primary-200/50 focus:outline-primary-200 disabled:hover:bg-primary-100',
+                (style === 'filled' && color === 'grey-dark') => 'bg-grey-700 hover:bg-grey-800 text-grey-100 focus:bg-grey-800 focus:outline-grey-800 disabled:hover:bg-grey-700',
+                (style === 'filled' && color === 'grey-light') => 'bg-grey-200 hover:bg-grey-300 text-grey-800 focus:bg-grey-300 focus:outline-grey-300 disabled:hover:bg-grey-200',
+                (style === 'filled' && color === 'red') => 'bg-red-400 hover:bg-red-500 text-grey-100 focus:bg-red-500 focus:outline-red-500 disabled:hover:bg-red-400',
+                (style === 'text' && color === 'primary') => 'text-primary-400 hover:text-primary-500 focus:text-primary-500 focus:outline-primary-500 disabled:hover:text-primary-400',
+                (style === 'text' && color === 'grey-dark') => 'text-grey-800 hover:text-black focus:text-black focus:outline-black disabled:hover:text-grey-800',
+                () => 'bg-primary hover:bg-primary-400 text-grey-100 focus:bg-primary-400 focus:outline-primary-400 disabled:hover:bg-primary'
+            )}}
+            {{ switch(
+                (style === 'filled' && size === 'lg') => 'py-2.5 px-5 text-base',
+                (style === 'filled' && size === 'sm') => 'py-2 px-3 text-sm',
+                (style === 'text' && size === 'lg') => 'text-base',
+                (style === 'text' && size === 'sm') => 'text-sm',
+                () => 'py-2.5 px-5 text-base'
+            ) }}
+            {{ as === 'button' and !disabled ?= 'hover:cursor-pointer' }}
+            {{ class }}
+        "
+        {{ slot:attributes }}
+        {{ !faux ?= { partial:statamic-peak-tools::snippets/button_attributes } }}
+    >
+        {{ if icon && (icon_position == 'before' or icon_position == 'both') }}
+            {{ svg
+                :src="icon"
+                class="{{ size === 'lg' ? 'w-4 h-4' : 'w-3 h-3' }} {{ svg_class }}"
+            }}
+        {{ /if }}
+
+        <span class="min-w-fit">
+            {{ link_type == 'email' ? { label | obfuscate_email } : label }}
+        </span>
+
+        {{ if icon && (icon_position == 'after' or icon_position == 'both') }}
+            {{ svg
+                :src="icon"
+                class="{{ size === 'lg' ? 'w-4 h-4' : 'w-3 h-3' }} {{ svg_class }}"
+            }}
+        {{ /if }}
+
+        {{ if target_blank }}
+            <span class="sr-only">{{ trans:strings.external_link }}</span>
+        {{ /if }}
+    </{{ as or 'a' }}>
+{{ /if }}
+<!-- End: /components/_button.antlers.html -->

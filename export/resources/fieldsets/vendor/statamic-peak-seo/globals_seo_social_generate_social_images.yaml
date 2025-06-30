@@ -1,0 +1,40 @@
+title: 'Globals SEO: Social Sharing - Generate Social Images'
+fields:
+  -
+    handle: use_social_image_generation
+    field:
+      display: 'Use Social Images generation'
+      type: toggle
+      icon: toggle
+      instructions: 'Enable Social Image generation. **Important**: you need to have Puppeteer and Browsershot installed.'
+      instructions_position: below
+      listable: hidden
+      width: 50
+      localizable: true
+  -
+    handle: social_images_collections
+    field:
+      mode: select
+      display: 'Collections with Social Images'
+      type: collections
+      icon: collections
+      instructions: 'Chosen collections will show a _Generate Social Images_ button in the collections overview.'
+      instructions_position: below
+      listable: hidden
+      width: 50
+      localizable: true
+      if:
+        use_social_image_generation: 'equals true'
+  - 
+    handle: use_no_sandbox_for_social_image_generation
+    field:
+      display: 'Use noSandbox() for Social Images generation'
+      type: toggle
+      icon: toggle
+      instructions: 'This runs Browsershot with the [noSandbox()](https://spatie.be/docs/browsershot/v4/miscellaneous-options/disable-sandboxing) method. **Important**: Only use this if you have problems with Browsershot/Puppeteer.'
+      instructions_position: below
+      listable: hidden
+      width: 100
+      localizable: true
+      if:
+        use_social_image_generation: 'equals true'

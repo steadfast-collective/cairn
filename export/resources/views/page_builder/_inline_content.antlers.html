@@ -1,0 +1,17 @@
+{{#
+    @name Inline Content
+    @desc The Inline Content page builder block.
+    @set page.page_builder.inline_content
+#}}
+
+<!-- /page_builder/_inline_content.antlers.html -->
+{{ partial:page_builder/block }}
+    <div class="max-w-[1440px] px-5 py-8 md:px-[88px] lg:px-[196px] md:py-[64px] mx-auto">
+        {{ partial:typography/prose }}
+            {{ content }}
+                {{ partial:if_exists src="partials/sets/{type}" }}
+            {{ /content }}
+        {{ /partial:typography/prose }}
+    </div>
+{{ /partial:page_builder/block }}
+<!-- End: /page_builder/_inline_content.antlers.html -->

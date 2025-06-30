@@ -1,0 +1,13 @@
+{{#
+    @name h3
+    @desc The typography h3 partial to render an h3 with `class`, `as`, `color` and `content` attributes.
+    @param* content The h3 content.
+    @param as The wrapping element. Defaults to `h3`.
+    @param weight Set a custom font weight utility. Falls back to `font-medium`.
+    @param color Set a custom text color utility. Falls back to `text-black`.
+    @param class Add custom CSS classes.
+#}}
+
+<!-- /typography/_h3.antlers.html -->
+<{{ as or 'h3' }} class="text-[32px] leading-[40px] md:text-[40px] md:leading-[48px] {{ weight or 'font-semibold' }} {{ color or 'text-black' }} {{ class }}">{{ content | nl2br }}</{{ as or 'h3' }}>
+<!-- End: /typography/_h3.antlers.html -->

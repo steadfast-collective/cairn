@@ -1,0 +1,16 @@
+<figure class="{{ figure_class }} flex flex-col gap-4">
+    <picture>
+        <source srcset="{{ glide:url :w="image_width":h="image_height" q="70" fit="{{ image_fit ?? 'crop_focal' }}" format="webp" }} 1x, {{ glide:url :w="image_width":h="image_height" dpr="2" q="70" fit="{{ image_fit ?? 'crop_focal' }}" format="webp" }} 2x" type="image/webp"/>
+        <source srcset="{{ glide:url :w="image_width":h="image_height" q="70" fit="{{ image_fit ?? 'crop_focal' }}" format="jpg" }} 1x, {{ glide:url :w="image_width":h="image_height" dpr="2" q="70" fit="{{ image_fit ?? 'crop_focal' }}" format="jpg" }} 2x" type="image/jpg" />
+        <img src="{{ glide:url :w="image_width" :h="image_height" q="70" fit="{{ image_fit ?? 'crop_focal' }}" }} 1x, {{ glide:url :w="image_width":h="image_height" dpr="2" q="70" fit="{{ image_fit ?? 'crop_focal' }}" }} 2x" alt="{{ alt }}"
+            class="{{ image_class ?? 'w-full object-cover' }}"
+            width="{{ image_width }}"
+            height="{{ image_height }}"
+            loading="lazy" />
+    </picture>
+    {{ if caption }}
+        <figcaption class="{{ caption_class ?? 'text-sm' }}">
+            {{ caption}}
+        </figcaption>
+    {{ /if }}
+</figure>

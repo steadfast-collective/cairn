@@ -1,0 +1,25 @@
+{{ get_errors }}
+<div
+    class="p-4 border border-red-400 rounded-lg text-black p-6 bg-white {{ wrapper_class }}"
+    role="alert"
+    aria-labelledby="error-summary-title"
+    tabindex="-1"
+>
+    {{ partial:typography/h5 id="error-summary-title" content="There are issues with the form input: " }}
+
+    <ul class="list-inside list-disc mt-4" role="list">
+        {{ fields }}
+            {{ messages }}
+                <li>
+                    <a
+                        href="#{{ field }}"
+                        class="decoration-2 underline underline-offset-4 motion-safe:transition-colors hover:text-primary-600"
+                    >
+                        {{ message }}
+                    </a>
+                </li>
+            {{ /messages }}
+        {{ /fields }}
+    </ul>
+</div>
+{{ /get_errors }}

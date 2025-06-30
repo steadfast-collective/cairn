@@ -1,0 +1,13 @@
+{{#
+    @name h2
+    @desc The typography h2 partial to render an h2 with `class`, `as`, `color` and `content` attributes.
+    @param* content The h2 content.
+    @param as The wrapping element. Defaults to `h2`.
+    @param weight Set a custom font weight utility. Falls back to `font-medium`.
+    @param color Set a custom text color utility. Falls back to `text-black`.
+    @param class Add custom CSS classes.
+#}}
+
+<!-- /typography/_h2.antlers.html -->
+<{{ as or 'h2' }} class="text-[40px] leading-[48px] md:text-5xl {{ weight or 'font-semibold' }} {{ color or 'text-black' }} {{ class }}">{{ content | nl2br }}</{{ as or 'h2' }}>
+<!-- End: /typography/_h2.antlers.html -->

@@ -1,0 +1,29 @@
+title: 'Block: Social Share'
+fields:
+  -
+    handle: content_tab
+    field:
+      type: tab
+      display: Content
+  -
+    handle: Heading
+    field:
+      type: text
+      display: Heading
+      width: 66
+      default: 'Share this article'
+  -
+    handle: include_copy_url_button
+    field:
+      type: toggle
+      display: 'Include Copy Url Button'
+      width: 33
+      default: true
+  -
+    handle: settings
+    field:
+      type: tab
+      display: Settings
+  -
+    handle: anchor_id
+    field: common.anchor_id

@@ -1,0 +1,100 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: text_field
+            field:
+              type: text
+              display: 'Text Field'
+              instructions: 'Some Supporting Text'
+              instructions_position: below
+              validate:
+                - required
+          -
+            handle: email_field
+            field:
+              input_type: email
+              type: text
+              display: 'Email Field'
+              placeholder: name@example.com
+          -
+            handle: integer_field
+            field:
+              type: integer
+              display: 'Integer Field'
+          -
+            handle: date_field
+            field:
+              input_type: date
+              type: text
+              display: 'Date Field'
+          -
+            handle: textarea_field
+            field:
+              type: textarea
+              display: 'Textarea Field (No Limit)'
+          -
+            handle: textarea_field_duplicate
+            field:
+              type: textarea
+              display: 'Textarea Field (Limit)'
+              character_limit: 200
+          -
+            handle: checkboxes_field
+            field:
+              options:
+                -
+                  key: value1
+                  value: 'Value 1'
+                -
+                  key: value2
+                  value: 'Value 2'
+                -
+                  key: value3
+                  value: 'Value 3'
+              type: checkboxes
+              display: 'Checkboxes Field'
+          -
+            handle: radio_field
+            field:
+              options:
+                -
+                  key: value1
+                  value: 'Value 1'
+                -
+                  key: value2
+                  value: 'Value 2'
+                -
+                  key: 'value 3'
+                  value: 'Value 3'
+              type: radio
+              display: 'Radio Field'
+          -
+            handle: select_field
+            field:
+              options:
+                -
+                  key: value1
+                  value: 'Value 1'
+                -
+                  key: value2
+                  value: 'Value 2'
+                -
+                  key: value3
+                  value: 'Value 3'
+              type: select
+              display: 'Select Field'
+          -
+            handle: toggle_field
+            field:
+              inline_label: 'Est et magna enim elit culpa deserunt. Est et magna enim elit culpa deserunt. Est et magna enim elit culpa deserunt.'
+              type: toggle
+              display: 'Toggle Field'
+          -
+            handle: files_field
+            field:
+              type: files
+              display: 'Files Field'

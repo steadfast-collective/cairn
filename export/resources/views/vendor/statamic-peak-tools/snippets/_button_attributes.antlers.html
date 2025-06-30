@@ -1,0 +1,31 @@
+{{#
+    @name Button attributes
+    @desc Button attributes snippet used in `resources/views/components/_button.antlers.html`.
+#}}
+
+{{ switch(
+    (link_type == 'entry') => 'href="{{ entry:url }}"',
+    (link_type == 'url') => 'href="{{ url }}"',
+    (link_type == 'email') => 'href="mailto:{{ email | obfuscate_email }}"',
+    (link_type == 'tel') => 'href="tel:{{ tel }}"',
+    (link_type == 'sms') => 'href="sms:{{ sms }}"',
+    (link_type == 'asset') => 'href="{{ asset }}" download',
+    (as !== 'button') => 'href="{{ url }}"'
+)}}
+{{ target_blank ?= 'rel="noopener" target="_blank"' }}
+{{ attr_title ?= 'title="{{ attr_title }}"' }}
+{{ attr_aria ?= 'aria-label="{{ attr_aria }}"' }}
+
+{{ if
+    (tracker_event && environment == 'local' && seo:trackers_local) or
+    (tracker_event && environment == 'staging' && seo:trackers_staging) or
+    (tracker_event && environment == 'production' && seo:trackers_production)
+}}
+    {{ if seo:use_fathom }}
+        onclick="fathom.trackEvent('{{ tracker_event }}')"
+    {{ /if }}
+    {{ if (seo:tracker_type === 'gtag' || seo:tracker_type === 'gtm' || seo:tracker_type === 'sgtm') }}
+        onclick="gtag({'event': '{{ tracker_event }}'})"
+    {{ /if }}
+{{ /if  }}
+{{ disabled ?= 'disabled' }}

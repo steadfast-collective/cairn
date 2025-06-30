@@ -1,0 +1,52 @@
+<footer class="flex flex-col w-full max-w-[1440px] px-5 py-8 xl:px-[88px] md:py-16 mx-auto mt-auto mb-0"> 
+    <div class="flex flex-col md:flex-row justify-between pb-10 gap-10">
+        <div class="flex flex-col w-full md:w-[360px] gap-6 md:gap-10">
+            {{ partial:components/logo mark="true" class="p-2 w-[96px] h-[96px]" }}
+            <p class="text-xl">{{ footer_options:footer_text }}</p>
+            <ul class="flex gap-4">
+                {{ social_media:social_media }}
+                <li>
+                    <a href="{{prefix}}{{handle}}">
+                        {{ svg :src="type" class="w-5 h-5" }}
+                    </a>
+                </li>
+                {{ /social_media:social_media }}
+            </ul>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-x-8 gap-y-10 max-w-[720px] w-full">
+            {{ nav:footer select="url|title" }}
+                {{ if children }}
+                    <ul class="w-full">
+                        <li class="flex flex-col gap-3 sm:gap-4 ">
+                            <span class="text-grey-800 font-semibold text-[14px] leading-[20px]">{{ title }}</span>
+                            <ul class="flex flex-col gap-2 sm:gap-3" >
+                                {{ children }}
+                                <li>
+                                    <a href="{{ url}}" class="text-grey-800 hover:underline focus:outline-none focus-visible:ring focus-visible:ring-offset-2">
+                                        {{ title }}
+                                    </a>
+                                </li>
+                                {{ /children }}
+                            </ul>
+                        </li>
+                    </ul>
+                {{ /if children }}
+            {{ /nav:footer }}
+        </div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center sm:justify-between gap-5 sm:gap-12 pt-10 border-t border-grey-300">
+        <div class="flex items-baseline">
+            <span class="text-xs font-medium text-grey-800">&copy; {{ date | format('Y') }} Cairn</span>
+        </div>
+        <ul class="flex flex-wrap justify-center gap-4 sm:gap-6">
+            {{ nav:sub_footer select="url|title" }}
+                <li class="text-xs">
+                    <a href="{{ url}}" class="text-xs font-medium underline focus:outline-none focus-visible:ring focus-visible:ring-offset-2">
+                        {{ title }}
+                    </a>
+                </li>
+            {{ /nav:sub_footer }}
+            {{ yield:reset_consent }}
+        </ul>
+    </div>
+</footer>

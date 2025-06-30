@@ -1,0 +1,24 @@
+{
+    "name": "steadfast-collective/cairn",
+    "extra": {
+        "statamic": {
+            "name": "Cairn",
+            "description": "Steadfast Starter Kit"
+        },
+        "laravel": {
+            "providers": [
+                "SteadfastCollective\\Cairn\\ServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SteadfastCollective\\Cairn\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    }
+}

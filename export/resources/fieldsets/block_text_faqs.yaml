@@ -1,0 +1,122 @@
+title: 'Block: Text + FAQs'
+fields:
+  -
+    handle: content_tab
+    field:
+      tab_icon: paragraph-align-justified
+      type: tab
+      display: Content
+  -
+    handle: layout
+    field:
+      options:
+        -
+          key: left
+          value: Left
+        -
+          key: right
+          value: Right
+        -
+          key: stacked
+          value: Stacked
+      default: left
+      type: select
+      display: Layout
+      width: 33
+  -
+    handle: preview_left
+    field:
+      html: '<img src="/assets/block_previews/text_faqs_left.png" />'
+      type: html
+      display: Preview
+      width: 66
+      if:
+        layout: 'equals left'
+  -
+    handle: preview_right
+    field:
+      html: '<img src="/assets/block_previews/text_faqs_right.png" />'
+      type: html
+      display: Preview
+      width: 66
+      if:
+        layout: 'equals right'
+  -
+    handle: preview_stacked
+    field:
+      html: '<img src="/assets/block_previews/text_faqs_stacked.png" />'
+      type: html
+      display: Preview
+      width: 66
+      if:
+        layout: 'equals stacked'
+  -
+    import: text
+  -
+    handle: faqs
+    field:
+      tab_icon: alert
+      type: tab
+      display: FAQs
+  -
+    handle: faq_selection
+    field:
+      options:
+        -
+          key: collection
+          value: 'From Collection'
+        -
+          key: manual
+          value: Manual
+      default: collection
+      type: button_group
+      display: 'FAQ Selection'
+  -
+    handle: faqs_entries
+    field:
+      collections:
+        - faqs
+      type: entries
+      display: FAQs
+      if:
+        faq_selection: 'equals collection'
+  -
+    handle: faqs_manual
+    field:
+      mode: stacked
+      add_row: 'Add FAQ'
+      type: grid
+      display: FAQs
+      if:
+        faq_selection: 'equals manual'
+      fields:
+        -
+          handle: title
+          field:
+            type: text
+            display: Title
+        -
+          handle: body
+          field:
+            buttons:
+              - bold
+              - italic
+              - unorderedlist
+              - orderedlist
+              - removeformat
+              - quote
+              - anchor
+              - underline
+              - strikethrough
+            remove_empty_nodes: false
+            type: bard
+            display: Body
+  -
+    handle: settings
+    field:
+      tab_icon: settings-vertical
+      type: tab
+      display: Settings
+  -
+    handle: anchor_id
+    field: common.anchor_id

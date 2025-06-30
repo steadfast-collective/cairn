@@ -1,0 +1,54 @@
+{{#
+    @name Button attributes
+    @desc A single icon button component. Faux is used when a button is displayed inside a link (for example in link blocks).
+    @param* label The caption label.
+    @param as The wrapping element. Defaults to `a`.
+    @param size Size of button. Defaults to `lg`
+    @param color Color of button. Defaults to `primary`
+    @param style Style of button. Defaults to `filled`
+    @param* icon Icon src to use in button
+    @param faux Boolean. For faux button wrapped in an actual button/anchor.
+#}}
+
+{{ size = size ?? 'md' }}
+{{ color = color ?? 'primary' }}
+{{ style = style ?? 'filled' }}
+
+{{ if label }}
+    <{{ as or 'a' }}
+        class="
+            inline-flex items-center justify-center motion-safe:transition outline-offset-2 hover:cursor-pointer disabled:opacity-50 disabled:pointer-events-none rounded-full
+            {{ switch(
+                (style === 'filled' && color === 'primary') => 'bg-primary hover:bg-primary-400 text-grey-100 focus:bg-primary-400 focus:outline-primary-400 disabled:hover:bg-primary',
+                (style === 'filled' && color === 'secondary') => 'bg-primary-100 hover:bg-primary-200/50 text-primary-500 focus:bg-primary-200/50 focus:outline-primary-200 disabled:hover:bg-primary-100',
+                (style === 'filled' && color === 'grey-dark') => 'bg-grey-700 hover:bg-grey-800 text-grey-100 focus:bg-grey-800 focus:outline-grey-800 disabled:hover:bg-grey-700',
+                (style === 'filled' && color === 'grey-light') => 'bg-grey-200 hover:bg-grey-300 text-grey-800 focus:bg-grey-300 focus:outline-grey-300 disabled:hover:bg-grey-200',
+                (style === 'filled' && color === 'red') => 'bg-red-400 hover:bg-red-500 text-grey-100 focus:bg-red-500 focus:outline-red-500 disabled:hover:bg-red-400',
+                (style === 'icon' && color === 'primary') => 'text-primary-400 hover:text-primary-500 focus:text-primary-500 focus:outline-primary-500 disabled:hover:text-primary-400',
+                (style === 'icon' && color === 'grey-dark') => 'text-grey-800 hover:text-black focus:text-black focus:outline-black disabled:hover:text-grey-800',
+                () => 'bg-primary hover:bg-primary-400 text-grey-100 focus:bg-primary-400 focus:outline-primary-400 disabled:hover:bg-primary',
+            )}}
+            {{ switch(
+                (style === 'filled' && size === 'sm') => 'size-7',
+                (style === 'filled' && size === 'md') => 'size-9',
+                (style === 'filled' && size === 'lg') => 'size-11',
+            ) }}
+            {{ class }}
+        "
+        {{ slot:attributes }}
+        {{ !faux ?= { partial:statamic-peak-tools::snippets/button_attributes } }}
+        title="{{ label }}"
+    >
+        {{ svg
+            :src="icon"
+            class="{{ switch(
+                (style === 'filled' && size === 'lg') => 'size-4',
+                (style === 'filled' && size === 'md') => 'size-3.5',
+                (style === 'filled' && size === 'sm') => 'size-3',
+                (style === 'icon' && size === 'sm') => 'size-3.5',
+                (style === 'icon' && size === 'md') => 'size-4',
+                (style === 'icon' && size === 'lg') => 'size-5',
+            )}}"
+        }}
+    </{{ as or 'a' }}>
+{{ /if }}

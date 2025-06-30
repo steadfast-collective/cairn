@@ -1,0 +1,56 @@
+title: 'Block: Text + Form'
+fields:
+  -
+    handle: content_tab
+    field:
+      type: tab
+      display: Content
+  -
+    handle: layout
+    field:
+      options:
+        -
+          key: right
+          value: Right
+        -
+          key: left
+          value: Left
+      default: right
+      type: select
+      display: Layout
+      width: 33
+  -
+    handle: preview_left
+    field:
+      html: '<img src="/assets/block_previews/text_form_left.png" />'
+      type: html
+      display: Preview
+      width: 66
+      if:
+        layout: 'equals left'
+  -
+    handle: preview_right
+    field:
+      html: '<img src="/assets/block_previews/text_form_right.png" />'
+      type: html
+      display: Preview
+      width: 66
+      if:
+        layout: 'equals right'
+  -
+    import: text
+  -
+    handle: form_tab
+    field:
+      type: tab
+      display: Form
+  -
+    import: form
+  -
+    handle: settings_tab
+    field:
+      type: tab
+      display: Settings
+  -
+    handle: anchor_id
+    field: common.anchor_id

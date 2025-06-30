@@ -1,0 +1,27 @@
+title: 'Social media'
+data:
+  social_media:
+    -
+      id: mcamw20o
+      handle: '#'
+      prefix: 'https://www.facebook.com/'
+      type: facebook
+      enabled: true
+    -
+      id: mcamw5yv
+      handle: '#'
+      prefix: 'https://www.instagram.com/'
+      type: instagram
+      enabled: true
+    -
+      id: mcamw8m4
+      handle: '#'
+      prefix: 'https://www.linkedin.com/'
+      type: linkedin
+      enabled: true
+    -
+      id: mcc0e1nl
+      handlle: '#'
+      prefix: 'https://x.com/'
+      type: twitter
+      enabled: true

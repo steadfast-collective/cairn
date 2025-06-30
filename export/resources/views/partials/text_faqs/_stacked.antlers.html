@@ -1,0 +1,12 @@
+<div class="max-w-[1440px] px-5 py-8 xl:px-[88px] md:py-16 mx-auto flex flex-col gap-8 md:gap-16 items-center justify-center">
+    {{ partial:partials/text class="{(block:layout == 'left') ? 'md:order-1' : 'md:order-0'} text-center" center="true" }}
+
+    {{ if faqs }}
+        <div class="{{ (block:layout == 'left') ? 'order-0' : 'order-1' }} w-full">
+            {{ faqs }}
+                {{ partial:components/accordion }}
+            {{ /faqs }}
+        </div>
+    {{ /if }}
+
+</div>

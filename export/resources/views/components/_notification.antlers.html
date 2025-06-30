@@ -1,0 +1,40 @@
+{{#
+    @name Notification
+    @desc The notification component. Currently used in `resources/views/page_builder/_form.antlers.html`.
+    @param* content The notification content.
+    @param* type The type of notification: `success`, `notice`, or `error`.
+    @param class Add custom CSS classes.
+#}}
+
+<!-- /components/_notification.antlers.html -->
+<div
+    class="
+        rounded-lg border p-6 bg-white
+        {{ switch(
+            (type == 'success') => 'border-green-300',
+            (type == 'notice') => 'border-secondary-400',
+            (type == 'error') => 'border-red-300',
+            () => 'border-gray-700'
+        )}}
+        {{ class }}
+    "
+>
+    <div class="flex">
+        <div>
+            <h3
+                class="
+                    text-base font-bold
+                    {{ switch(
+                        (type == 'success') => 'text-primary-300',
+                        (type == 'notice') => 'text-secondary-500',
+                        (type == 'error') => 'text-red-300',
+                        () => 'text-gray-800'
+                    )}}
+                "
+            >
+                {{ content }}
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- End: /components/_notification.antlers.html -->

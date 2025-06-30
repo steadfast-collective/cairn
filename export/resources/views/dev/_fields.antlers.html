@@ -1,0 +1,25 @@
+<div class="">
+    <div class="flex flex-col gap-2 mb-2">
+
+        {{ partial:vendor/statamic/forms/field_wrapper }}
+
+        {{ /partial:vendor/statamic/forms/field_wrapper }}
+        {{ partial:vendor/statamic/forms/label
+            handle="password"
+            title="Password"
+            tooltip="This is a cool tooltip!"
+        }}
+
+        {{ partial:vendor/statamic/forms/fields/password
+            handle="pw-field"
+            no_js="true"
+            class="max-w-[]"
+        }}
+
+        {{ partial:vendor/statamic/forms/instructions }}
+            <p>Some supporting text can go here</p>
+        {{ /partial:vendor/statamic/forms/instructions }}
+    </div>
+
+    {{ partial:components/form handle="dev_form" }}
+</div>

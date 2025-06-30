@@ -1,0 +1,47 @@
+<li
+    {{ if children }}
+        x-data="{ isOpen: false }"
+        @keyup.escape.window="isOpen = false"
+        @mouseenter="!('ontouchstart' in window) && (isOpen = true)"
+        @mouseleave="!('ontouchstart' in window) && (isOpen = false)"
+        class="relative {{ class }}"
+    {{ else }}
+        class="relative {{ class }}"
+    {{ /if }}
+>
+    <a
+        {{ if children }}
+            href="#"
+            @click.prevent="isOpen = !isOpen"
+            :aria-expanded="isOpen"
+            aria-label="{{ trans:strings.subnav_open }}"
+        {{ else }}
+            href="{{ link }}"
+        {{ /if }}
+        title="{{ accessible_title }}"
+        aria-label="{{ aria_label ?? accessible_title }}"
+        target="_blank"
+        class="flex gap-1 items-center p-2 space-x-1 text-gray-100 bg-gray-900 hover:bg-gray-600 focus:bg-gray-600"
+    >
+        {{ if icon }}
+            {{ svg :src="icon" attr:class="w-4 h-4 fill-current" attr:alt="" attr:aria-hidden="true" }}
+        {{ /if }}
+        <span>{{ title }}</span>
+    </a>
+
+    {{ if children }}
+        <ul
+            x-show="isOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="absolute left-0 right-0 top-full bg-gray-900 flex flex-col"
+            @click.away="isOpen = false"
+        >
+            {{ slot }}
+        </ul>
+    {{ /if }}
+</li>

@@ -1,0 +1,63 @@
+title: 'Page builder'
+fields:
+  -
+    handle: page_builder
+    field:
+      type: replicator
+      localizable: true
+      hide_display: true
+      collapse: true
+      listable: false
+      display: 'Page builder'
+      button_label: 'Add block'
+      sets:
+        interactive:
+          display: Interactive
+          sets:
+            divider:
+              display: Divider
+              icon: arrows-fit-to-height
+              fields:
+                -
+                  import: block_divider
+            inline_content:
+              display: 'Inline Content'
+              icon: text-formatting-paragraph
+              instructions: 'Longform content blocks for blog text e.t.c.'
+              fields:
+                -
+                  import: block_inline_content
+            text_image:
+              display: 'Text  + Image'
+              icon: text-formatting-wrap-image-margin-right
+              fields:
+                -
+                  import: block_image_text
+            text_faqs:
+              display: 'Text + FAQs'
+              icon: alert-help-question
+              fields:
+                -
+                  import: block_text_faqs
+            text:
+              display: Text
+              icon: text-formatting-paragraph
+              instructions: 'Basic text block'
+              fields:
+                -
+                  import: block_text
+            text_form:
+              display: 'Text + Form'
+              icon: form-text-field
+              instructions: 'Text section with a form'
+              fields:
+                -
+                  import: block_text_form
+            social_share:
+              display: 'Social Share'
+              icon: social-share
+              instructions: ''
+              fields:
+                -
+                  import: block_social_share
+      width: 100

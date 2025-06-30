@@ -1,0 +1,75 @@
+title: 'Block: Image + Text'
+fields:
+  -
+    handle: content_tab
+    field:
+      tab_icon: paragraph-align-justified
+      type: tab
+      display: Content
+  -
+    import: text
+  -
+    handle: images_tab
+    field:
+      tab_icon: image-picture
+      type: tab
+      display: Images
+  -
+    handle: image_position
+    field:
+      options:
+        -
+          key: right
+          value: Right
+        -
+          key: left
+          value: Left
+      type: button_group
+      display: 'Image Position'
+      default: right
+      width: 33
+  -
+    handle: block_preview_left
+    field:
+      html: '<img src="/assets/block_previews/text_image_left.png"/>'
+      type: html
+      display: Preview
+      width: 66
+      sortable: false
+      if:
+        image_position: 'equals left'
+  -
+    handle: block_preview_right
+    field:
+      html: '<img src="/assets/block_previews/text_image_right.png"/>'
+      type: html
+      display: Preview
+      width: 66
+      sortable: false
+      if:
+        image_position: 'equals right'
+  -
+    handle: image
+    field:
+      max_files: 1
+      min_files: 1
+      container: images
+      type: assets
+      display: Image
+  -
+    handle: caption
+    field:
+      type: text
+      display: Caption
+  -
+    handle: settings_tab
+    field:
+      tab_icon: settings-vertical
+      type: tab
+      display: Settings
+  -
+    handle: anchor_id
+    field:
+      type: text
+      display: 'Anchor ID'
+      width: 50

@@ -1,0 +1,19 @@
+{{#
+    @name Logo
+    @desc The logo component with a `width` attribute.
+#}}
+
+<!-- /components/_logo.antlers.html -->
+<a
+    aria-label="Logo {{ config:app:name }}"
+    href="{{ site:url }}"
+    class="{{ class }}"
+    {{ slot:attributes }}
+>
+    {{ if full }}
+        {{ partial:logos/full :class="svgClass" }}
+    {{ else }}
+        {{ partial:logos/mark :class="svgClass" }}
+    {{ /if }}
+</a>
+<!-- End: /components/_logo.antlers.html -->

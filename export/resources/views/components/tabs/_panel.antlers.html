@@ -1,0 +1,9 @@
+<section
+    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+    role="tabpanel"
+    class="{{ class }}"
+    {{ cloak ?= "x-cloak" }}
+>
+    {{ slot }}
+</section>

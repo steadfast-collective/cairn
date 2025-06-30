@@ -1,0 +1,57 @@
+tree:
+  -
+    id: 68fd2698-e09b-47e0-bd02-3e80bac1047d
+    title: Services
+    url: /
+    data:
+      description: null
+      enable_mega_menu: true
+      mega_menu:
+        title: 'A Mega Menu Title'
+        description: 'Recusandae cum fugit dolores nam facilis cum reprehenderit veniam.'
+        button:
+          label: 'A Button'
+          link: 'https://steadfastcollective.com'
+        call_to_action:
+          image: nicole-elliott-n9de44vszlm-unsplash.jpg
+          title: 'CTA Title'
+          description: 'CTA description do exercitation consectetur amet mollit.'
+          link: 'https://steadfastcollective.com'
+    children:
+      -
+        id: b5addc80-baa4-4bd3-b492-05b94baabd3e
+        title: 'Link 1'
+        url: /
+        data:
+          description: 'Laboris et adipisicing adipisicing in ea consequat.'
+      -
+        id: 67b6533c-64bf-4805-aeea-fe1982dd9f0f
+        title: 'Link 2'
+      -
+        id: 079fef0d-465b-4f63-a83b-db7090c670ef
+        title: 'Link 3'
+      -
+        id: 1742787b-d3ab-43f2-b8c6-22a2bb90865c
+        title: 'Link 4'
+      -
+        id: a1ca8a09-a9db-4e7e-a476-d5fc0bd5a435
+        title: 'Link 5'
+      -
+        id: bd979b3f-c098-4dbb-b8b2-fedb1bc8615e
+        title: 'Link 6'
+  -
+    id: 24b08601-e76f-4434-ae61-882f99891d7d
+    title: 'About Us'
+    children:
+      -
+        id: fd89e831-9eb8-426e-b42a-96ec415909f8
+        title: 'Link 1'
+      -
+        id: 56f1966d-6a0c-4b52-9159-83d0661a427b
+        title: 'Link 2'
+  -
+    id: 1ec2ef31-2c22-41b6-b786-63174245aea9
+    title: FAQs
+  -
+    id: 47685f34-465a-446e-801f-e9b63a621622
+    title: News

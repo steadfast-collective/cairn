@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="{{ site:short_locale }}" class="antialiased scroll-smooth scroll-pt-4">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+        {{ vite src="resources/js/site.js|resources/css/site.css" }}
+
+        {{ partial:statamic-peak-seo::snippets/seo }}
+        {{ partial:statamic-peak-browser-appearance::snippets/browser_appearance }}
+        {{ partial:statamic-peak-tools::snippets/live_preview }}
+        {{ partial:snippets/feedbucket }}
+        {{ stack:head }}
+    </head>
+    <body class="flex flex-col min-h-screen bg-grey-100 selection:bg-primary selection:text-white relative has-[dialog[open]]:overflow-hidden">
+        {{ stack:seo_body }}
+        {{ partial:statamic-peak-tools::snippets/noscript }}
+        {{ partial:statamic-peak-tools::navigation/skip_to_content }}
+        {{ partial:statamic-peak-tools::components/toolbar }}
+
+        {{ partial:layout/header }}
+
+        {{ template_content }}
+
+        {{# Footer #}}
+        {{ partial:layout/footer }}
+    </body>
+</html>

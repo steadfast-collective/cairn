@@ -1,0 +1,35 @@
+<!-- /vendor/statamic/forms/fields/textarea.antlers.html -->
+<textarea
+    {{ unless no_js }}
+        x-model="form.{{ handle }}"
+        :aria-invalid="form.invalid('{{ handle }}')"
+        :class="{
+            'border-red-400 focus:border-red-400 focus:outline-red-300': form.invalid('{{ handle }}'),
+            'border-grey-300 focus:border-primary focus:outline-none': !form.invalid('{{ handle }}')
+        }"
+        :aria-describedby="form.invalid('{{ handle }}') ? 'error-{{ handle }}' : '{{ instructions ? '{{ handle }}-instructions' : false }}'"
+    {{ /unless }}
+    class="
+        border w-full h-32 caret-black py-2.5 px-3 rounded-lg placeholder:text-grey-500 text-black outline-offset-2 ring-0
+        {{ if no_js }}
+            {{ error ? 'border-red-400 focus:border-red-400 focus:outline-red-300' : 'border-grey-300 focus:border-primary focus:outline-none' }}
+        {{ /if }}
+        {{ class }}
+    "
+    id="{{ handle }}"
+    name="{{ handle }}"
+    rows="5"
+    {{ placeholder ?= 'placeholder="{placeholder}"' }}
+    {{ instructions ?= 'aria-describedBy="{handle}-instructions"' }}
+    {{ character_limit ?= 'maxlength="{character_limit}"' }}
+    {{ autocomplete ?= 'autocomplete="{autocomplete}"' }}
+    {{ if disable_autocomplete }}
+        autocomplete="off"
+        data-1p-ignore
+        data-bwignore
+        data-lpignore="true"
+        data-form-type="other"
+    {{ /if }}
+    {{ slot:attributes }}
+>{{ if old }}{{ old }}{{ else }}{{ value }}{{ /if }}</textarea>
+<!-- End: /vendor/statamic/forms/fields/textarea.antlers.html -->

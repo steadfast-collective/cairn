@@ -1,0 +1,22 @@
+{{#
+    @name Text + FAQs
+    @desc The Text + FAQs page builder block.
+    @set page.page_builder.text_faqs
+#}}
+
+{{ if block:faq_selection === 'manual' }}
+    {{ faqs = block:faqs_manual }}
+{{ else }}
+    {{ faqs = block:faqs_entries }}
+{{ /if }}
+
+
+<!-- /page_builder/_text_faqs.antlers.html -->
+{{ partial:page_builder/block }}
+    {{ if block:layout === 'stacked' }}
+        {{ partial:partials/text_faqs/stacked }}
+    {{ else }}
+        {{ partial:partials/text_faqs/regular }}
+    {{ /if }}
+{{ /partial:page_builder/block }}
+<!-- End: /page_builder/_text_faqs.antlers.html -->

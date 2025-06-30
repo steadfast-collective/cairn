@@ -1,0 +1,11 @@
+{{#
+	@name Page builder block
+	@desc The page builder block wrapper
+#}}
+
+<section
+    id="{{ block:anchor_id or {type + '_' + id} }}"
+    class="{{ 'block_' + type }} {{ class }}"
+>
+    {{ slot }}
+</section>

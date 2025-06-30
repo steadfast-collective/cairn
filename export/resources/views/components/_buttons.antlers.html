@@ -1,0 +1,17 @@
+{{ if buttons }}
+    {{ if type == 'buttons' }}
+        {{# Add a size utility and use different styling when called as a Bard set. #}}
+        <div class="span-md flex flex-wrap gap-4 my-8 last:mb-0 not-prose {{ center ?= 'justify-center'}}">
+            {{ buttons }}
+                {{ partial:components/button }}
+            {{ /buttons }}
+        </div>
+    {{ else }}
+        {{# The styling when called from any other partial or template. #}}
+        <div class="flex flex-wrap gap-4 {{ class }}">
+            {{ buttons }}
+                {{ partial:components/button class="" }}
+            {{ /buttons }}
+        </div>
+    {{ /if }}
+{{ /if }}

@@ -1,0 +1,29 @@
+title: Form
+fields:
+  -
+    handle: title
+    field:
+      type: text
+      localizable: true
+      display: Title
+  -
+    handle: handle
+    field:
+      max_items: 1
+      type: form
+      display: Form
+      validate:
+        - required
+  -
+    handle: redirect
+    field:
+      type: link
+      display: Redirect
+      width: 66
+  -
+    handle: submit_label
+    field:
+      default: Submit
+      type: text
+      display: 'Submit Label'
+      width: 33

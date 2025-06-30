@@ -1,0 +1,10 @@
+<{{ as or 'button' }}
+    class="shrink-0 cursor-pointer text-brand-grey-900 hover:text-brand-grey-700 flex items-center justify-center transition duration-150 ease-in {{ class }}"
+    {{ slot:attributes }}
+>
+    {{ if label }}
+        {{ label }}
+    {{ else }}
+        {{ slot }}
+    {{ /if }}
+</{{ as or 'button' }}>

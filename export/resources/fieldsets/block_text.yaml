@@ -1,0 +1,19 @@
+title: 'Block: Text'
+fields:
+  -
+    handle: content_tab
+    field:
+      tab_icon: paragraph-align-justified
+      type: tab
+      display: Content
+  -
+    import: text
+  -
+    handle: settings_tab
+    field:
+      type: tab
+      display: Settings
+      tab_icon: settings-vertical
+  -
+    handle: anchor_id
+    field: common.anchor_id

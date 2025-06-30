@@ -1,0 +1,14 @@
+{{ partial:page_builder/block }}
+    <div class="max-w-[1440px] px-5 py-8 xl:px-[88px] md:py-16 mx-auto grid md:grid-cols-2 gap-12 md:gap-[64px] items-center">
+        {{ partial:partials/text class="{(image_position == 'left') ? 'md:order-1' : 'md:order-0'}" }}
+        {{ image }}
+            {{
+                partial:components/image
+                :capton="caption"
+                image_width="600"
+                image_height="600"
+                figure_class="{(image_position == 'left') ? 'order-0' : 'order-1'}"
+            }}
+        {{ /image }}
+    </div>
+{{ /partial:page_builder/block }}

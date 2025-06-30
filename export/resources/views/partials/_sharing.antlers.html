@@ -1,0 +1,58 @@
+<div class="flex items-center flex-row gap-4">
+    {{# fb share #}}
+    {{ partial:components/share_button as="a" }}
+        {{ slot:attributes }}
+            target="_blank"
+            href="{{ 'https://www.facebook.com/sharer/sharer.php?u=' + permalink + '&amp;title=' + title }}"
+            aria-label="Share this article on Facebook"
+        {{ /slot:attributes }}
+        {{ svg:facebook class="w-5 h-5" }}
+    {{ /partial:components/share_button }}
+
+    {{# twitter/x share #}}
+    {{ partial:components/share_button as="a" }}
+        {{ slot:attributes }}
+            target="_blank"
+            href="{{ 'https://twitter.com/intent/tweet?text=' + title + '&amp;url=' + permalink }}"
+            aria-label="Share this article on Twitter"
+        {{ /slot:attributes }}
+        {{ svg:twitter class="w-5 h-5" }}
+    {{ /partial:components/share_button }}
+
+    {{# linkedin share #}}
+    {{ partial:components/share_button as="a" }}
+        {{ slot:attributes }}
+            target="_blank"
+            href="{{ 'https://www.linkedin.com/sharing/share-offsite/?url=' + permalink }}"
+            aria-label="Share this article on LinkedIn"
+        {{ /slot:attributes }}
+        {{ svg:linkedin class="w-5 h-5" }}
+    {{ /partial:components/share_button }}
+    {{ if include_copy_url_button == 'true' }}
+    <span class="text-sm font-bold text-grey-500">Or</span>
+        <div
+            x-data="{
+            copyUrl() {
+                const buttonText = this.$el.querySelector('button span');
+                navigator.clipboard.writeText(window.location.href)
+                .then(() => {
+                    buttonText.innerText = 'URL Copied';
+                    setTimeout(() => buttonText.innerText = 'Share', 2000);
+                });
+            }
+            }"
+            @click="copyUrl()"
+        >
+            
+            {{ partial:components/button
+                as="button"
+                label="Share"
+                color="secondary"
+                size="sm"
+                icon_position="before"
+                icon="link-01"
+                link_type="none"
+            }}
+        </div>
+    {{ /if }}
+</div>

@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "./typography.css";
+@plugin "@tailwindcss/forms";
+@source "../views";
+@source "../../content";
+@config '../js/tailwind.cairn.js';
+
+
+@theme {
+    --color-primary-100: #E5E7FF;
+    --color-primary-200: #777FFA;
+    --color-primary-300: #4752F9;
+    --color-primary-400: #3B45CC;
+    --color-primary-500: #2A3194;
+    --color-primary: var(--color-primary-300);
+
+    --color-secondary-100: #F5E5FF;
+    --color-secondary-200: #C677FA;
+    --color-secondary-300: #B247F9;
+    --color-secondary-400: #923BCC;
+    --color-secondary-500: #6A2A94;
+    --color-secondary: var(--color-secondary-300);
+
+    --color-grey-100: #FEFEFE;
+    --color-grey-200: #F3F5FA;
+    --color-grey-300: #E9EBF2;
+    --color-grey-400: #CACED7;
+    --color-grey-500: #5C616C;
+    --color-grey-600: #3C4048;
+    --color-grey-700: #1D1D1F;
+    --color-grey-800: #111;
+    --color-grey: var(--color-grey-500);
+
+    --color-black: var(--color-grey-800);
+
+
+    --color-red-100: #FCE1E0;
+    --color-red-200: #EFB7BC;
+    --color-red-300: #A3210D;
+    --color-red-400: #D62B11;
+    --color-red-500: #8A1C0B;
+    --color-red: var(--color-red-300);
+
+    --color-yellow-100: #F7F2E7;
+    --color-yellow-200: #EDDFC3;
+    --color-yellow-300: #DB9E25;
+    --color-yellow-400: #DB9E25;
+    --color-yellow-500: #996500;
+    --color-yellow: var(--color-yellow-300);
+
+    --color-green-100: #EEF7E7;
+    --color-green-200: #D5EDC3;
+    --color-green-300: #569628;
+    --color-green-400: #347C00;
+    --color-green-500: #2A6300;
+    --color-green: var(--color-green-300);
+
+    --default-font-family: "Inter";
+}
+
+
+.tippy-box[data-theme='cairn'] {
+    @apply bg-grey-200 text-black rounded-lg;
+
+    .tippy-arrow {
+        @apply text-grey-200;
+        transform: translate(12px, 0px) !important;
+    }
+
+    .tippy-content {
+        @apply px-1.5 py-1 text-xs;
+    }
+}
+
+[x-cloak] {
+    display: none;
+}

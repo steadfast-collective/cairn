@@ -1,0 +1,14 @@
+<li>
+    <button
+        :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+        @click="select($el.id)"
+        @mousedown.prevent
+        @focus="select($el.id)"
+        type="button"
+        :tabindex="isSelected($el.id) ? 0 : -1"
+        :aria-selected="isSelected($el.id)"
+        :class="isSelected($el.id) ? 'opacity-100 border-primary' : 'opacity-50 border-grey-400'"
+        class="-mb-0.5 inline-flex text-black pb-3 lg:pb-4 border-b-2 motion-safe:transition text-base font-normal"
+        role="tab"
+    >{{ title }}</button>
+</li>

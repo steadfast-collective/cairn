@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-6 md:gap-8 {{ class }}">
+    {{ if heading }}
+        {{ partial:typography/h2 as="{{element ?? h2}}" :content="heading" }}
+    {{ /if }}
+    {{ if content }}
+        {{ partial:typography/prose }}
+            {{ content }}
+                {{ if type == "text"}}
+                    {{ text }}
+                {{ else if type == "buttons"}}
+                    {{ partial:components/buttons }}
+                {{ /if }}
+            {{ /content }}
+        {{ /partial:typography/prose }}
+    {{ /if }}
+</div>

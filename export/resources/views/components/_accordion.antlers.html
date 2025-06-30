@@ -1,0 +1,37 @@
+<div
+    x-data="{expanded: false}"
+    class="flex flex-col items-start border-b border-gray-300 py-4 lg:py-6"
+>
+    <h2 class="w-full">
+        <button
+            class="w-full flex gap-4 justify-between items-center text-left hover:cursor-pointer"
+            x-on:click="expanded = !expanded"
+            :aria-expanded="expanded"
+            type="button"
+            aria-controls="accordion-{{ id }}-content-{{ index }}"
+            id="accordion-{{ id }}-id"
+        >
+            <span class="w-full text-lg md:text-xl font-medium text-grey-700">{{ title }}</span>
+
+            <div
+                class="size-9 shrink-0 flex justify-center items-center rounded-full bg-grey-200 motion-safe:transition text-grey-800"
+                :class="{
+                    'rotate-45' : expanded
+                }"
+            >
+                {{ svg:plus class="size-3.5" }}
+            </div>
+        </button>
+    </h2>
+
+    <div
+        x-show="expanded"
+        x-cloak
+        x-collapse
+        id="accordion-{{ id }}-content-{{ index }}"
+        role="region"
+        aria-labelledby="accordion-{{ id }}-id"
+    >
+        <div class="pt-3 lg:pt-4 prose max-w-none">{{ body }}</div>
+    </div>
+</div>

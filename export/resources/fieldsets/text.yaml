@@ -1,0 +1,63 @@
+title: Text
+fields:
+  -
+    handle: heading
+    field:
+      type: text
+      display: Heading
+      width: 75
+  -
+    handle: element
+    field:
+      options:
+        -
+          key: h1
+          value: null
+        -
+          key: h2
+          value: null
+        -
+          key: h3
+          value: null
+        -
+          key: h4
+          value: null
+        -
+          key: h5
+          value: null
+        -
+          key: h6
+          value: null
+        -
+          key: p
+          value: null
+      default: h2
+      type: select
+      display: Element
+      width: 25
+  -
+    handle: content
+    field:
+      buttons:
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+        - small
+        - lead
+        - extra-small
+      remove_empty_nodes: trim
+      type: bard
+      display: Content
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            buttons:
+              display: Buttons
+              icon: link
+              fields:
+                -
+                  import: buttons

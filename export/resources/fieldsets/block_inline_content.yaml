@@ -1,0 +1,82 @@
+title: 'Block: Inline Content'
+fields:
+  -
+    handle: anchor_id
+    field: common.anchor_id
+  -
+    handle: content
+    field:
+      buttons:
+        - h1
+        - h2
+        - h3
+        - h4
+        - h5
+        - h6
+        - lead
+        - small
+        - extra-small
+        - bold
+        - italic
+        - anchor
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - underline
+      remove_empty_nodes: false
+      type: bard
+      display: Content
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            buttons:
+              display: Buttons
+              instructions: Buttons
+              icon: link
+              fields:
+                -
+                  import: buttons
+            image:
+              display: Image
+              icon: media-image-picture-orientation
+              fields:
+                -
+                  handle: image
+                  field:
+                    max_files: 1
+                    min_files: 1
+                    container: images
+                    type: assets
+                    display: Image
+                -
+                  handle: caption
+                  field:
+                    type: text
+                    display: Caption
+            two_images:
+              display: 'Two Images'
+              icon: media-image-picture-gallery
+              fields:
+                -
+                  handle: images
+                  field:
+                    mode: stacked
+                    max_rows: 2
+                    min_rows: 2
+                    type: grid
+                    display: Images
+                    fields:
+                      -
+                        handle: image
+                        field:
+                          max_files: 1
+                          min_files: 1
+                          container: images
+                          type: assets
+                          display: Image
+                      -
+                        handle: caption
+                        field:
+                          type: text
+                          display: Caption

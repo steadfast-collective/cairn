@@ -1,0 +1,118 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: description
+            field:
+              type: textarea
+              display: Description
+          -
+            handle: enable_mega_menu
+            field:
+              type: toggle
+              display: 'Enable Mega Menu'
+          -
+            handle: mega_menu
+            field:
+              type: group
+              display: 'Mega Menu'
+              if:
+                enable_mega_menu: 'equals true'
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                -
+                  handle: description
+                  field:
+                    type: textarea
+                    display: Description
+                -
+                  handle: button
+                  field:
+                    type: group
+                    display: Button
+                    fields:
+                      -
+                        handle: label
+                        field:
+                          input_type: text
+                          antlers: false
+                          type: text
+                          display: Label
+                          listable: hidden
+                          instructions_position: above
+                          visibility: visible
+                          replicator_preview: true
+                          hide_display: false
+                      -
+                        handle: link
+                        field:
+                          type: link
+                          display: Link
+                          listable: hidden
+                          instructions_position: above
+                          visibility: visible
+                          replicator_preview: true
+                          hide_display: false
+                -
+                  handle: call_to_action
+                  field:
+                    type: group
+                    display: 'Call To Action'
+                    fields:
+                      -
+                        handle: image
+                        field:
+                          max_files: 1
+                          mode: list
+                          container: images
+                          restrict: false
+                          allow_uploads: true
+                          show_filename: true
+                          show_set_alt: true
+                          type: assets
+                          display: Image
+                          listable: hidden
+                          instructions_position: above
+                          visibility: visible
+                          replicator_preview: true
+                          hide_display: false
+                      -
+                        handle: title
+                        field:
+                          input_type: text
+                          antlers: false
+                          type: text
+                          display: Title
+                          listable: hidden
+                          instructions_position: above
+                          visibility: visible
+                          replicator_preview: true
+                          hide_display: false
+                      -
+                        handle: description
+                        field:
+                          antlers: false
+                          type: textarea
+                          display: Description
+                          listable: hidden
+                          instructions_position: above
+                          visibility: visible
+                          replicator_preview: true
+                          hide_display: false
+                      -
+                        handle: link
+                        field:
+                          type: link
+                          display: Link
+                          listable: hidden
+                          instructions_position: above
+                          visibility: visible
+                          replicator_preview: true
+                          hide_display: false
