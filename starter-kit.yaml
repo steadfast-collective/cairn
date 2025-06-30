@@ -23,7 +23,6 @@ export_paths:
   - config/statamic/users.php
   - lang/
   - public/robots.txt
-  - public/build
   - public/images
   - public/favicons
   - public/files
