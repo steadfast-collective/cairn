@@ -47,6 +47,7 @@ export_paths:
   - package-lock.json
   - vite.config.js
   - routes/dev.php
+  - content
 dependencies:
   doefom/currency-fieldtype: ^1.4
   eminos/statamic-tabs: ^1.2
