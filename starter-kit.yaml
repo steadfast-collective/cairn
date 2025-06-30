@@ -23,10 +23,10 @@ export_paths:
   - config/statamic/users.php
   - lang/
   - public/robots.txt
-  - public/images
+  - public/images/.gitkeep
   - public/favicons
-  - public/files
-  - public/social_images
+  - public/files/.gitkeep
+  - public/social_images/.gitkeep
   - public/assets
   - resources/blueprints
   - resources/css/cp.css
