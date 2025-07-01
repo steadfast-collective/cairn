@@ -54,6 +54,8 @@ export_paths:
   - vite.config.js
   - routes/dev.php
   - content
+  - config/statamic/bard_texstyle.php
+  - config/cairn.php
 export_as:
   README.md: README.example.md
 dependencies:
