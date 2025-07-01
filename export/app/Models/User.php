@@ -14,7 +14,7 @@ use SteadfastCollective\StatamicAuth\Traits\HasCustomAuthFlow;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids, HasCustomAuthFlow, UsesTwoFactor;
+    use HasFactory, Notifiable, HasUuids, HasCustomAuthFlow;
 
     /**
      * The attributes that are mass assignable.

@@ -1,0 +1,53 @@
+title: 'SEO Services'
+fields:
+  -
+    handle: more_info_text
+    field:
+      type: text
+      display: 'More info text'
+      default: 'See cookie information'
+  -
+    handle: show_name
+    field:
+      default: true
+      type: toggle
+      display: 'Show Name'
+      width: 33
+      visibility: read_only
+  -
+    handle: show_purpose
+    field:
+      type: toggle
+      display: 'Show Purpose'
+      width: 33
+  -
+    handle: show_expiry
+    field:
+      type: toggle
+      display: 'Show Expiry'
+      width: 33
+  -
+    handle: services
+    field:
+      type: grid
+      display: Services
+      fields:
+        -
+          handle: name
+          field:
+            type: text
+            display: Name
+        -
+          handle: purpose
+          field:
+            type: text
+            display: Purpose
+            if:
+              $parent.show_purpose: 'equals 1'
+        -
+          handle: expiry
+          field:
+            type: text
+            display: Expiry
+            if:
+              $parent.show_expiry: 'equals 1'

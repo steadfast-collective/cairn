@@ -1,0 +1,5 @@
+title: 'Block: Consent'
+fields:
+  -
+    handle: anchor_id
+    field: common.anchor_id

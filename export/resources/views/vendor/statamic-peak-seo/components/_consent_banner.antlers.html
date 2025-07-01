@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap gap-4 w-full items-center" x-show="!showCookieCategories">
+        <div class="flex md:flex-wrap gap-4 w-full items-center" x-show="!showCookieCategories">
             {{ partial:components/button
                 as="button"
                 label="Accept All Cookies"
@@ -84,7 +84,7 @@
             {{ /partial:components/button }}
         </div>
 
-        <div class="flex flex-wrap gap-4 w-full items-center" x-show="showCookieCategories"  x-cloak>
+        <div class="flex md:flex-wrap gap-4 w-full items-center" x-show="showCookieCategories"  x-cloak>
             {{ partial:components/button
                 as="button"
                 label="Go back"
@@ -200,6 +200,13 @@
                     saveConsent() {
                         this.data.consent = true
                         this.data.date = Math.floor(Date.now() / 1000)
+                        this.data.preferencesUpdated = true;
+
+                        setTimeout( () => this.data.preferencesUpdated = false, 1000)
+                        
+                    },
+                    getPreferencesUpdated() {
+                        return this.data.preferencesUpdated;
                     },
                     useConsentAPI()  {
                         return this.data.consent_api
@@ -217,6 +224,7 @@
                         data: Alpine.store('consentBanner').data,
                         showCookieCategories: false,
                         init() {
+                            this.data.preferencesUpdated = false;
                             {{ if seo:consent_revoke_before }}
                                 if (Alpine.store('consentBanner').getConsentDate() < '{{ seo:consent_revoke_before format="U" }}') {
                                     Alpine.store('consentBanner').invalidate()

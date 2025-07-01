@@ -18,52 +18,49 @@ data:
   use_matomo: false
   use_plausible: false
   use_cloudflare_web_analytics: false
-  tracker_type: scripts
-  scripts:
-    -
-      id: mciw6k56
-      category: Test
-      explainer: 'This is a short explainer'
-      services:
-        - Test
-        - '1 test'
-        - '2 test'
-        - '3 test'
-        - '4 test'
-        - '5 test'
-        - '6 test'
-      script_fragments:
-        -
-          id: FegbzAsy
-          type: script_tag
-          defer: false
-          async: false
-          source: '#'
-        -
-          id: mciw6ses
-          type: script_tag
-          defer: false
-          async: false
-          source: '#'
-      type: script
-      enabled: true
-    -
-      id: mciw6uoo
-      category: Another
-      explainer: 'Antoher description'
-      services:
-        - 'Other stuff'
-      script_fragments:
-        -
-          id: FegbzAsy
-          type: script_tag
-          defer: false
-          async: false
-          source: '#'
-      type: script
-      enabled: true
+  tracker_type: sgtm
+  sgtm_script: '#'
+  ad_storage_services:
+    more_info_text: 'See cookie information'
+    show_name: true
+    show_purpose: true
+    services:
+      -
+        id: mckcmo8t
+        name: _storage
+        purpose: 'Stores relevant information'
+      -
+        id: mckcmora
+        name: _storage-1
+        purpose: 'Stores irrelevant information'
+  analytics_services:
+    more_info_text: 'See cookie information for analytics'
+    show_name: true
+    show_purpose: true
+    show_expiry: true
+    services:
+      -
+        id: mckcmq5p
+        name: _ga
+        purpose: 'Set by Google Tag Manager. Helps us show you more relevant adverts'
+        expiry: '90 days'
+  ad_user_data_services:
+    more_info_text: 'See cookie information'
+    show_name: true
+    services:
+      -
+        id: mckcmrxf
+        name: 'Some name'
+  ad_personalization_services:
+    more_info_text: 'See cookie information'
+    show_name: true
+    services:
+      -
+        id: mckcz4vm
+        name: Test
   use_consent_banner: true
   embeds: false
+  consent_revoke_before: '2025-06-30 00:00'
   display_style: left
   cookie_banner_title: Consent
   cookie_banner_text:
@@ -75,3 +72,4 @@ data:
         -
           type: text
           text: "By clicking “Accept All Cookies”, you agree to the storing of cookies on your device and the processing of information obtained via those cookies (including about your preferences, device and online activity) by us and our commercial partners to enhance site navigation, personalise ads, analyze site usage, and assist in our marketing efforts. More information can be found in our Cookies and\_Privacy Policy. You can amend your cookie settings to reject non-essential cookies by clicking Cookie Settings."
+  manage_consent_page: d6c069e6-752e-451d-aeb2-c3f9aefb5246

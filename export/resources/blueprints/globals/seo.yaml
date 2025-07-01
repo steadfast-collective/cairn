@@ -127,3 +127,4 @@ tabs:
               display: 'Manage Consent Page'
               if:
                 use_consent_banner: 'equals true'
+              max_items: 1

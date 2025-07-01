@@ -1,0 +1,108 @@
+{{#
+    @name Consent
+    @desc The Consent page builder block.
+    @set page.page_builder.consent
+#}}
+
+<!-- /page_builder/_consent.antlers.html -->
+{{ partial:page_builder/block }}
+<div x-data="consentBanner" class="max-w-[1440px] px-5 py-8 md:px-[196px] lg:px-[88px] md:py-[64px] mx-auto" >
+    <div class="flex flex-col gap-[64px]">
+        <template x-for="type in $store.consentBanner.getConsentTypes()">
+            <div class="flex flex-col gap-8 md:gap-[32px]">
+                <div class="flex flex-col gap-8">
+                    <h2 class="text-[40px] leading-[48px] md:text-[48px] md:leading-[56px] font-medium" x-html="type.title"></h2>        
+                    <div class="text-xl" x-html="type.explanation"></div>
+                    <template x-if="type.services">
+                        <div x-data="{ expanded: false }" class="flex flex-col items-start gap-4">
+                            <button @click="expanded = !expanded" class="flex items-center gap-1 underline text-primary cursor-pointer">
+                                <template x-if="!expanded">
+                                    {{ svg src="chevron-down" class="w-4 h-4" }}
+                                </template>
+                                <template x-if="expanded">
+                                    {{ svg src="chevron-up" class="w-4 h-4" }}
+                                </template>
+                                <span x-html="type.more_info_text"></span>
+                            </button>
+                            <div x-show="expanded" x-collapse class="w-full sm:pl-6 sm:border-l sm:border-grey-300">
+                                <table class="w-full sm:w-auto min-w-[300px] table-auto sm:table-fixed border-collapse text-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-b border-gray-200 p-4 pt-0 pb-3 pl-8 text-left font-medium text-gray-800">Name</th>
+                                            <template x-if="type.show_purpose">
+                                                <th class="border-b border-gray-200 p-4 pt-0 pb-3 pl-8 text-left font-medium text-gray-800">Purpose</th>
+                                            </template>
+                                            <template x-if="type.show_expiry">
+                                                <th class="border-b border-gray-200 p-4 pt-0 pb-3 pl-8 text-left font-medium text-gray-800">Expiry</th>
+                                            </template>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template x-for="service in type.services">
+                                            <tr>
+                                                <td class="border-b border-gray-100 p-4 pl-8 text-gray-500" x-html="service.name"></td>
+                                                <template x-if="type.show_purpose">
+                                                    <td class="border-b border-gray-100 p-4 pl-8 text-gray-500" x-html="service.purpose"></td>
+                                                </template>
+                                                <template x-if="type.show_expiry">
+                                                    <td class="border-b border-gray-100 p-4 pl-8 text-gray-500" x-html="service.expiry"></td>
+                                                </template>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div>
+                    <label class="inline-flex items-center">
+                        <template x-if="type.disabled">
+                            <input class="mr-2 w-4 h-4 rounded border-neutral text-primary focus:border-primary opacity-50" type="checkbox" :name="type.handle" checked disabled>
+                        </template>
+
+                        <template x-if="!type.disabled">
+                            <input class="mr-2 w-4 h-4 rounded border-neutral text-primary focus:border-primary" type="checkbox" :name="type.handle" x-model="type.value">
+                        </template>
+
+                        <span class="">
+                            Accept <span x-html="type.title"></span> cookies 
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </template>
+        <div class="flex">
+
+            {{ partial:components/button
+                as="button"
+                label="Save preferences"
+                size="sm"
+                full_width="true"
+                class="sm:w-max"
+            }}
+                {{ slot:attributes }}
+                    @click="$store.consentBanner.saveConsent()"
+                    type="button"
+                    x-show="!$store.consentBanner.getPreferencesUpdated()"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+            {{ partial:components/button
+                as="button"
+                label="Preferences updated"
+                size="sm"
+                full_width="true"
+                class="sm:w-max"
+                disabled="true"
+            }}
+                {{ slot:attributes }}
+                    type="button"
+                    x-show="$store.consentBanner.getPreferencesUpdated()"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+        </div>
+    </div>
+</div>
+{{ /partial:page_builder/block }}
+<!-- End: /page_builder/_consent.antlers.html -->

@@ -60,4 +60,11 @@ fields:
               fields:
                 -
                   import: block_social_share
+            consent:
+              display: Consent
+              icon: setting-slider-vertical
+              instructions: 'Block to manage user consent'
+              fields:
+                -
+                  import: block_consent
       width: 100

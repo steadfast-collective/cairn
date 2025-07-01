@@ -38,15 +38,9 @@ fields:
                 -
                   handle: category
                   field:
-                    input_type: text
-                    antlers: false
                     display: Category
                     type: text
-                    icon: text
                     instructions: 'When you use the consent banner, scripts will be grouped under this category.'
-                    listable: hidden
-                    instructions_position: above
-                    visibility: visible
                     always_save: false
                     localizable: true
                     validate:
@@ -55,44 +49,23 @@ fields:
                 -
                   handle: explainer
                   field:
-                    input_type: text
-                    antlers: false
                     display: Explainer
                     type: text
-                    icon: text
                     instructions: 'Explainer for the current category when you use the consent banner.'
-                    listable: hidden
-                    instructions_position: above
-                    visibility: visible
                     validate: required
                     always_save: false
                     localizable: true
                 -
-                  handle: services
-                  field:
-                    type: list
-                    display: Services
-                    instructions: 'List services used to inform the end-user.'
-                    width: 50
-                    listable: hidden
-                    instructions_position: below
-                    visibility: visible
-                    replicator_preview: true
-                    hide_display: false
+                  import: seo_services
                 -
                   handle: script_fragments
                   field:
                     mode: stacked
                     min_rows: 1
                     add_row: 'Add script fragment'
-                    reorderable: true
                     display: 'Script fragments'
                     type: grid
                     replicator_preview: false
-                    icon: grid
-                    listable: hidden
-                    instructions_position: above
-                    visibility: visible
                     always_save: false
                     validate:
                       - required
@@ -232,8 +205,6 @@ fields:
                             - sometimes
                           instructions: 'The inline script tag contents (Javascript). Remove `<script>` and `</script>` tags. You can use Antlers.'
                           antlers: true
-                    fullscreen: true
-                    hide_display: false
   -
     handle: google_analytics
     field:
@@ -283,6 +254,57 @@ fields:
       if:
         tracker_type: 'equals sgtm'
   -
+    handle: section_services
+    field:
+      type: section
+      display: Services
+      instructions: 'List services per category loaded through Google Tag Manager to inform the end-user.'
+      replicator_preview: false
+      localizable: true
+      if:
+        tracker_type: 'equals gtm'
+        use_consent_banner: 'equals true'
+  -
+    handle: ad_storage_services
+    field:
+      type: group
+      display: 'Ad Storage'
+      if_any:
+        tracker_type: 'contains gtm'
+      fields:
+        -
+          import: seo_services
+  -
+    handle: analytics_services
+    field:
+      type: group
+      display: Analytics
+      if_any:
+        tracker_type: 'contains_any gtag,gtm'
+      fields:
+        -
+          import: seo_services
+  -
+    handle: ad_user_data_services
+    field:
+      type: group
+      display: 'Ad User Data'
+      if:
+        tracker_type: 'contains gtm'
+      fields:
+        -
+          import: seo_services
+  -
+    handle: ad_personalization_services
+    field:
+      type: group
+      display: 'Ad Personalization'
+      if_any:
+        tracker_type: 'contains gtm'
+      fields:
+        -
+          import: seo_services
+  -
     handle: use_consent_banner
     field:
       type: toggle
@@ -299,21 +321,21 @@ fields:
       instructions: "Only load in third party embedded video's from the `video` article set after consent."
       instructions_position: below
       always_save: false
-      width: 50
+      width: 25
       localizable: true
       if:
         use_consent_banner: 'equals true'
   -
     handle: embed_services
     field:
-      type: list
+      type: group
       display: 'Embed Services'
-      instructions: 'List embed services used to inform the end-user.'
-      width: 50
-      instructions_position: below
-      localizable: true
+      width: 75
       if:
         embeds: 'equals true'
+      fields:
+        -
+          import: seo_services
   -
     handle: hide_by_default
     field:
@@ -358,58 +380,3 @@ fields:
       if:
         use_consent_banner: 'equals true'
       visibility: hidden
-  -
-    handle: section_services
-    field:
-      type: section
-      display: Services
-      instructions: 'List services per category loaded through Google Tag Manager to inform the end-user.'
-      replicator_preview: false
-      localizable: true
-      if:
-        tracker_type: 'equals gtm'
-        use_consent_banner: 'equals true'
-  -
-    handle: analytics_storage_services
-    field:
-      type: list
-      display: Analytics
-      width: 25
-      instructions_position: below
-      localizable: true
-      if:
-        tracker_type: 'equals gtm'
-        use_consent_banner: 'equals true'
-  -
-    handle: ad_storage_services
-    field:
-      type: list
-      display: 'Ad Storage'
-      width: 25
-      instructions_position: below
-      localizable: true
-      if:
-        tracker_type: 'equals gtm'
-        use_consent_banner: 'equals true'
-  -
-    handle: ad_user_data_services
-    field:
-      type: list
-      display: 'Ad User Data'
-      width: 25
-      instructions_position: below
-      localizable: true
-      if:
-        tracker_type: 'equals gtm'
-        use_consent_banner: 'equals true'
-  -
-    handle: ad_personalization_services
-    field:
-      type: list
-      display: 'Ad Personalization'
-      width: 25
-      instructions_position: below
-      localizable: true
-      if:
-        tracker_type: 'equals gtm'
-        use_consent_banner: 'equals true'
