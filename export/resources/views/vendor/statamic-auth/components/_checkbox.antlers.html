@@ -1,0 +1,17 @@
+<label class="inline-flex items-start">
+    <input type="hidden" name="{{ handle }}" value="0">
+    <input
+        class="border-grey-400 checked:border-grey-800 rounded-full focus:border-grey-800 focus:ring-grey-800 text-grey-800 w-4 h-4 mr-3 relative rounded"
+        type="checkbox"
+        name="{{ handle }}"
+        value="{{ value }}"
+        {{ value ?= 'value="{value}"' }}
+        {{ checked ?= 'checked' }}
+        {{ id ?= 'id="{id}"'}}
+        {{ error ?= 'aria-describedby="error-{id}"' }}
+    >
+    <span class="text-base text-black">
+        {{ label }}
+        {{ slot }}
+    </span>
+</label>

@@ -1,3 +1,15 @@
+{{#
+    @name Layout
+    @desc The default layout file.
+#}}
+
+{{ get_errors }}
+    {{ section:seo_title }}
+        Error:
+    {{ /section:seo_title }}
+{{ /get_errors }}
+
+<!-- /layout.antlers.html -->
 <!doctype html>
 <html lang="{{ site:short_locale }}" class="antialiased scroll-smooth scroll-pt-4">
     <head>
@@ -14,21 +26,32 @@
         {{ partial:statamic-peak-seo::snippets/seo }}
         {{ partial:statamic-peak-browser-appearance::snippets/browser_appearance }}
         {{ partial:statamic-peak-tools::snippets/live_preview }}
-        {{ partial:snippets/feedbucket }}
         {{ stack:head }}
     </head>
-    <body class="flex flex-col min-h-screen bg-grey-100 selection:bg-primary selection:text-white relative has-[dialog[open]]:overflow-hidden">
+
+
+    <body class="relative flex flex-col items-center min-h-screen bg-grey-200 px-5 lg:px-0">
         {{ stack:seo_body }}
         {{ partial:statamic-peak-tools::snippets/noscript }}
         {{ partial:statamic-peak-tools::navigation/skip_to_content }}
-
         {{ partial:statamic-peak-tools::components/toolbar }}
 
-        {{ partial:layout/header }}
+        <div class="py-7 lg:py-10">
+            {{ partial:components/logo full="true" }}
+        </div>
 
-        {{ template_content }}
 
-        {{# Footer #}}
-        {{ partial:layout/footer }}
+        <main id="content" class="max-w-[616px] w-full {{ !({route_is route="auth.register.index"} or {route_is route="auth.account.2fa.*"}) ?= 'pt-5 md:pt-[114px]' }}">
+            {{ if {session:has key="success"} }}
+                {{ partial:components/notification
+                    type="success"
+                    title="{{ session:success }}"
+                    class="mb-4"
+                }}
+            {{ /if }}
+            {{ template_content }}
+        </main>
+
     </body>
 </html>
+<!-- End: /layout.antlers.html -->

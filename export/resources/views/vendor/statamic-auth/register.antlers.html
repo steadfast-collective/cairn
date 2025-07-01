@@ -1,0 +1,158 @@
+<form
+    class="w-full mx-auto p-6 lg:p-10 bg-grey-100 rounded-2xl flex flex-col gap-4 lg:gap-6"
+    action="{{ route:auth.register.store }}"
+    method="POST"
+    x-data="passwordRules"
+    novalidate
+>
+    <input type="hidden" name="_token" value="{{ csrf_token }}" />
+
+    {{ partial:vendor/statamic/forms/error_summary }}
+
+    <div class="flex flex-col gap-2 lg:gap-3 text-center">
+        <p class="text-xl text-grey-500 font-bold">Welcome</p>
+        {{ partial:typography/h4 as="h1" content="Create your account" weight="font-semibold" }}
+    </div>
+
+    <div class="flex flex-col gap-3 lg:gap-4">
+        {{ if separate_name_fields }}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 w-full">
+                {{ partial:vendor/statamic/forms/field_wrapper }}
+                    {{ partial:vendor/statamic/forms/label handle="first_name" title="First Name" }}
+
+                    {{ partial:vendor/statamic/forms/error
+                        id="first_name"
+                        error="{get_error:first_name}"
+                    }}
+
+                    {{ partial:vendor/statamic/forms/fields/text
+                        handle="email"
+                        autocomplete="given-name"
+                        no_js="true"
+                        error="{get_error:first_name}"
+                        :old="old:first_name"
+                    }}
+                {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+                {{ partial:vendor/statamic/forms/field_wrapper }}
+                    {{ partial:vendor/statamic/forms/label handle="last_name" title="Last Name" }}
+
+                    {{ partial:vendor/statamic/forms/error
+                        id="last_name"
+                        error="{get_error:last_name}"
+                    }}
+
+                    {{ partial:vendor/statamic/forms/fields/text
+                        handle="email"
+                        autocomplete="family-name"
+                        no_js="true"
+                        error="{get_error:last_name}"
+                        :old="old:last_name"
+                    }}
+                {{ /partial:vendor/statamic/forms/field_wrapper }}
+            </div>
+        {{ else }}
+            {{ partial:vendor/statamic/forms/field_wrapper }}
+                {{ partial:vendor/statamic/forms/label handle="name" title="Name" }}
+
+                {{ partial:vendor/statamic/forms/error
+                    id="name"
+                    error="{get_error:name}"
+                }}
+
+                {{ partial:vendor/statamic/forms/fields/text
+                    handle="name"
+                    autocomplete="name"
+                    no_js="true"
+                    error="{get_error:name}"
+                    :old="old:name"
+                }}
+            {{ /partial:vendor/statamic/forms/field_wrapper }}
+        {{ /if }}
+
+        {{ partial:vendor/statamic/forms/field_wrapper }}
+            {{ partial:vendor/statamic/forms/label handle="email" title="Email Address" }}
+
+            {{ partial:vendor/statamic/forms/error
+                id="email"
+                error="{get_error:email}"
+            }}
+
+            {{ partial:vendor/statamic/forms/fields/text
+                handle="email"
+                autocomplete="email"
+                type="email"
+                no_js="true"
+                error="{get_error:email}"
+                :old="old:email"
+            }}
+
+        {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+        {{ partial:vendor/statamic/forms/field_wrapper }}
+            {{ partial:vendor/statamic/forms/label handle="password" title="Password" }}
+
+            {{ partial:vendor/statamic/forms/error
+                id="password"
+                error="{get_error:password}"
+            }}
+
+            {{ partial:vendor/statamic/forms/fields/password
+                handle="password"
+                no_js="true"
+                autocomplete="new-password"
+                error="{get_error:password}"
+                class="w-full"
+            }}
+                {{ slot:attributes }}
+                    x-model="password"
+                {{ /slot:attributes }}
+            {{ /partial:vendor/statamic/forms/fields/password }}
+
+
+        {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+        {{ partial:statamic-auth::components/password_rules }}
+
+    </div>
+
+    <div class="flex flex-col gap-2 w-full">
+        {{ partial:statamic-auth::components/error
+            id="terms"
+            error="{get_error:terms}"
+        }}
+
+        {{ partial:statamic-auth::components/checkbox
+            handle="terms"
+            :old="old:terms"
+            no_js="true"
+            label="false"
+            class="text-left"
+            id="terms"
+            error="{get_error:terms}"
+            value="1"
+            :checked="old:terms"
+        }}
+            <div class="prose prose-a:underline">
+                <p>By selecting the Sign Up button, you agree to the <a href="">Terms of Service</a> and acknowledge the <a href="">Privacy Notice</a></p>
+            </div>
+        {{ /partial:statamic-auth::components/checkbox }}
+    </div>
+
+    {{ partial:components/button
+        label="Sign Up"
+        class="w-full justify-center"
+        as="button"
+    }}
+</form>
+
+<div class="mt-6 lg:mt-8 flex justify-center items-center gap-3 lg:gap-4">
+    <p class="text-black text-base">Already have an account?</p>
+
+    {{ partial:components/button
+        label="Sign In"
+        url="{{ route:auth.login }}"
+        size="sm"
+        color="secondary"
+    }}
+</div>

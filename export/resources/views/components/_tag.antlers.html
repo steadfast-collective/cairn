@@ -1,0 +1,19 @@
+<{{ as or 'span' }}
+    class="bg-primary-100 text-xs text-grey-700 inline-flex items-center gap-1 px-2 py-1 rounded-lg font-medium"
+>
+    {{ if icon && (icon_position == 'before' or icon_position == 'both') }}
+        {{ svg
+            :src="icon"
+            class="size-3 {{ svg_class }}"
+        }}
+    {{ /if }}
+
+    {{ title }}
+
+    {{ if icon && (icon_position == 'after' or icon_position == 'both') }}
+        {{ svg
+            :src="icon"
+            class="size-3 {{ svg_class }}"
+        }}
+    {{ /if }}
+</{{ as or 'span' }}>

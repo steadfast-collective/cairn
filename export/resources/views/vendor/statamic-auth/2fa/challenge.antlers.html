@@ -1,0 +1,149 @@
+<div
+    x-data="{
+        {{ if {get_error:recovery_code} }}
+            method: 'recovery'
+        {{ else }}
+            method: 'code'
+        {{ /if }}
+    }"
+    class="flex flex-col gap-5 lg:gap-8 items-center"
+>
+    <div
+        class="w-full mx-auto p-6 lg:p-10 bg-grey-100 rounded-2xl flex flex-col gap-4 lg:gap-6 items-center"
+
+    >
+        {{ partial:vendor/statamic/forms/error_summary wrapper_class="w-full" }}
+
+        {{ partial:statamic-auth::components/lock }}
+
+        <form
+            action="{{ route:auth.2fa.challenge.verify }}"
+            method="POST"
+            class="flex flex-col gap-4 lg:gap-6"
+            x-show="method === 'code'"
+        >
+            <input type="hidden" name="_token" value="{{ csrf_token }}">
+
+            {{ partial:typography/h4
+                as="h1"
+                content="{trans key="statamic-auth::strings.account.two_factor.challenge.title"}"
+                weight="font-semibold"
+                class="text-center"
+            }}
+
+            {{ partial:vendor/statamic/forms/field_wrapper class="gap-4 lg:gap-6" }}
+                {{ partial:vendor/statamic/forms/label
+                    handle="code"
+                    title="{trans key="statamic-auth::strings.account.two_factor.challenge.code.label"}"
+                    class="-mt-1 lg:-mt-3 text-center"
+                }}
+
+                {{ partial:vendor/statamic/forms/error
+                    id="code"
+                    error="{get_error:code}"
+                }}
+
+                {{ partial:vendor/statamic/forms/fields/text
+                    handle="code"
+                    no_js="true"
+                    error="{get_error:code}"
+                    placeholder="{trans key="statamic-auth::strings.account.two_factor.challenge.code.placeholder"}"
+                    autofocus="true"
+                }}
+            {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+            <p class="text-sm text-left text-black">
+                {{ trans key="statamic-auth::strings.account.two_factor.challenge.other_methods.prompt" }} <button type="button" @click.prevent="method = null" class="underline hover:cursor-pointer hover:text-primary motion-safe:transition-colors">{{ trans key="statamic-auth::strings.account.two_factor.challenge.other_methods.button" }}</button>
+            </p>
+
+            {{ partial:components/button
+                label="{trans key="statamic-auth::strings.account.two_factor.challenge.verify_code"}"
+                as="button"
+                class="w-full justify-center"
+            }}
+            {{ /partial:components/button }}
+
+        </form>
+
+        <div
+            x-show="!method"
+            x-cloak
+            class="w-full text-center"
+        >
+            {{ partial:typography/h4
+                content="{trans key="statamic-auth::strings.account.two_factor.challenge.other_methods.title"}"
+                weight="font-semibold"
+                class="text-center"
+            }}
+
+            <p class="text-grey-500 mt-2 lg:mt-3">
+                {{ trans key="statamic-auth::strings.account.two_factor.challenge.other_methods.description" }}
+            </p>
+
+            <div class="flex flex-col gap-4 mt-4 lg:mt-6 items-center">
+                {{ partial:components/button
+                    label="{trans key='statamic-auth::strings.account.two_factor.challenge.other_methods.use_recovery'}"
+                    class="w-max"
+                    color="secondary"
+                    icon="key-01"
+                    icon_position="before"
+                }}
+                    {{ slot:attributes }}
+                        @click.prevent="method = 'recovery'"
+                    {{ /slot:attributes }}
+                {{ /partial:components/button }}
+            </div>
+        </div>
+
+        <form
+            action="{{ route:auth.2fa.challenge.verify }}"
+            method="POST"
+            class="flex flex-col gap-4 w-full"
+            x-show="method === 'recovery'"
+            x-cloak
+        >
+            <input type="hidden" name="_token" value="{{ csrf_token }}">
+
+            {{ partial:vendor/statamic/forms/field_wrapper }}
+                {{ partial:vendor/statamic/forms/label
+                    handle="recovery_code"
+                    title="{trans key="statamic-auth::strings.account.two_factor.challenge.recovery_code.label"}"
+                }}
+
+                {{ partial:vendor/statamic/forms/error
+                    id="recovery_code"
+                    error="{get_error:recovery_code}"
+                }}
+
+                {{ partial:vendor/statamic/forms/fields/text
+                    handle="recovery_code"
+                    no_js="true"
+                    error="{get_error:recovery_code}"
+                }}
+
+            {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+            {{ partial:components/button
+                label="{trans key='statamic-auth::strings.account.two_factor.challenge.verify_code'}"
+                as="button"
+                class="w-full justify-center"
+            }}
+            {{ /partial:components/button }}
+        </form>
+    </div>
+
+    {{ partial:components/button
+        label="{trans key='statamic-auth::strings.account.two_factor.challenge.other_methods.back_to_primary'}"
+        icon="arrow-left"
+        icon_position="before"
+        style="text"
+        color="grey-dark"
+        size="sm"
+        as="button"
+    }}
+        {{ slot:attributes }}
+            @click.prevent="method = 'code'"
+            x-show="method != 'code'"
+        {{ /slot:attributes }}
+    {{ /partial:components/button }}
+</div>

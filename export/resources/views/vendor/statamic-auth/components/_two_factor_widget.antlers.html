@@ -1,0 +1,111 @@
+<div
+    class="w-full mx-auto p-6 lg:p-10 bg-grey-100 rounded-2xl flex flex-col gap-6 lg:gap-10 justify-center items-center"
+>
+    {{ partial:statamic-auth::components/lock }}
+
+
+    <div class="text-center">
+        {{ partial:typography/h4 content="Two Factor Authentication" weight="font-semibold" }}
+        <p class="text-grey-500 mt-2 lg:mt-3">{{ trans key="statamic-auth::strings.account.two_factor.description" }}</p>
+
+        {{ if !2fa_enabled }}
+            <form
+                action="{{ route:auth.account.2fa.enable }}"
+                method="POST"
+                class="w-full flex items-center gap-4 justify-center mt-4 lg:mt-6"
+            >
+                <input type="hidden" name="_token" value="{{ csrf_token }}">
+
+                {{ partial:components/button
+                    label="{{ trans key="statamic-auth::strings.account.two_factor.enable_button" }}"
+                    size="sm"
+                    as="button"
+                }}
+            </form>
+        {{ /if }}
+    </div>
+
+
+    {{ if 2fa_enabled }}
+        <div class="flex flex-col gap-4 lg:gap-6">
+            {{ partial:typography/h5 content="{trans key='statamic-auth::strings.account.two_factor.auth_methods'}" weight="font-semibold" }}
+
+            <div class="h-px w-full bg-grey-300"></div>
+
+            <form
+                action="{{ route:auth.account.2fa.destroy }}"
+                method="POST"
+                class="w-full flex items-center justify-between gap-4 lg:gap-6"
+            >
+                <input type="hidden" name="_token" value="{{ csrf_token }}">
+
+                <div class="flex flex-col gap-2 lg:gap-3">
+                    <p class="text-xl font-semibold text-black">{{ trans key="statamic-auth::strings.account.two_factor.auth_app.title" }}</p>
+                    <p class="text-sm text-grey-500 font-normal">{{ trans key="statamic-auth::strings.account.two_factor.auth_app.description" }}</p>
+                </div>
+
+                {{ partial:components/button
+                    label="{trans key='statamic-auth::strings.account.two_factor.disable_button'}"
+                    size="sm"
+                    as="button"
+                }}
+            </form>
+
+            <div class="h-px w-full bg-grey-300"></div>
+
+            <div>
+                <form
+                    action="{{ route:auth.account.2fa.generate-codes }}"
+                    method="POST"
+                    class="w-full flex items-center justify-between gap-4 lg:gap-6"
+                >
+                    <input type="hidden" name="_token" value="{{ csrf_token }}">
+
+                    <div class="flex gap-2 lg:gap-3">
+                        <p class="text-xl font-semibold text-black">{{ trans key="statamic-auth::strings.account.two_factor.recovery_codes.title" }}</p>
+                        {{ partial:components/tag
+                            title="{trans_choice key='statamic-auth::strings.account.two_factor.recovery_codes.unused' :count='recovery_code_count'}"
+                        }}
+                    </div>
+
+                    {{ partial:components/button
+                        label="{trans key='statamic-auth::strings.account.two_factor.recovery_codes.reset'}"
+                        size="sm"
+                        as="button"
+                    }}
+                </form>
+
+                {{ if current_user:two_factor_recovery_code_last_used }}
+                    {{ partial:components/notification
+                        type="warning"
+                        body="{trans
+                            key="statamic-auth::strings.account.two_factor.recovery_codes.notice"
+                            date="{{ current_user:two_factor_recovery_code_last_used format='d F Y' }}"
+                            time="{{ current_user:two_factor_recovery_code_last_used format='H:i' }}"
+                        }"
+                        show_icon="true"
+                        title="false"
+                        class="mt-4"
+                    }}
+                {{ /if }}
+
+                {{ if {session:has key="showRecoveryCodes"} }}
+                    <div class="mt-4">
+                        <p class="text-sm text-grey-500">{{ trans key="statamic-auth::strings.account.two_factor.recovery_codes.save_prompt" }}</p>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 justify-center w-full mt-4 lg:mt-6">
+                            {{ current_user:two_factor_recovery_codes }}
+                                <li class="text-sm bg-grey-200 border border-grey-300 rounded text-center w-full text-grey-700 py-2 px-3 lg:px-4 font-medium">
+                                    {{ value }}
+                                </li>
+                            {{ /current_user:two_factor_recovery_codes }}
+                        </ul>
+                    </div>
+                {{ /if }}
+            </div>
+
+        </div>
+
+    {{ /if }}
+
+
+</div>

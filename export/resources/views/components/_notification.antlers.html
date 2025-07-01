@@ -1,39 +1,65 @@
 {{#
     @name Notification
     @desc The notification component. Currently used in `resources/views/page_builder/_form.antlers.html`.
-    @param* content The notification content.
-    @param* type The type of notification: `success`, `notice`, or `error`.
+    @param title The notification title.
+    @param title_element The notification title element. Defaults `h3`
+    @param body The notification content.
+    @param* type The type of notification: `warning`, `error`, `success`, `info`. Default `info`
     @param class Add custom CSS classes.
 #}}
 
+
+{{ notification_color = switch(
+    (type == 'warning') => 'border-yellow-200 bg-yellow-100',
+    (type == 'error') => 'border-red-200 bg-red-100',
+    (type == 'success') => 'border-green-200 bg-green-100',
+    () => 'border-primary-200 bg-primary-100'
+) }}
+
+{{ title_color = switch(
+    (type == 'warning') => 'text-yellow-500',
+    (type == 'error') => 'text-red-500',
+    (type == 'success') => 'text-green-500',
+    () => 'text-primary-500'
+) }}
+
+
+{{ body_color = switch(
+    (type == 'warning') => 'text-yellow-400',
+    (type == 'error') => 'text-red-400',
+    (type == 'success') => 'text-green-400',
+    () => 'text-primary-400'
+) }}
+
+{{ icon = switch(
+    (type == 'warning') => 'alert-hexagon',
+    (type == 'error') => 'alert-triangle',
+    () => 'check-circle'
+) }}
+
 <!-- /components/_notification.antlers.html -->
 <div
-    class="
-        rounded-lg border p-6 bg-white
-        {{ switch(
-            (type == 'success') => 'border-green-300',
-            (type == 'notice') => 'border-secondary-400',
-            (type == 'error') => 'border-red-300',
-            () => 'border-gray-700'
-        )}}
-        {{ class }}
-    "
+    class="rounded-xl border p-4 {{ notification_color }} {{ class }}"
+    role="status"
 >
-    <div class="flex">
-        <div>
-            <h3
-                class="
-                    text-base font-bold
-                    {{ switch(
-                        (type == 'success') => 'text-primary-300',
-                        (type == 'notice') => 'text-secondary-500',
-                        (type == 'error') => 'text-red-300',
-                        () => 'text-gray-800'
-                    )}}
-                "
-            >
-                {{ content }}
-            </h3>
+    <div class="flex gap-3 {{ !body ? 'items-center' : 'items-start' }}">
+        {{ if show_icon }}
+            {{ svg :src="icon" class="size-4 {{ title_color }} shrink-0" }}
+        {{ /if }}
+
+        <div class="flex flex-col gap-1">
+            {{ if title }}
+                <{{ title_element or 'h3' }}
+                    class="text-base font-bold {{ title_color }}"
+                >
+                    {{ title }}
+                </{{ title_element or 'h3' }}>
+            {{ /if }}
+            {{ if body }}
+                <p class="text-sm font-normal {{ body_color }}">
+                    {{ body }}
+                </p>
+            {{ /if }}
         </div>
     </div>
 </div>

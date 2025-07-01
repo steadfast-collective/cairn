@@ -1,0 +1,63 @@
+<main
+    class="bg-grey-200 pt-5 lg:pt-8 pb-6 lg:pb-16 px-5"
+    id="content"
+>
+    <div class="max-w-[616px] w-full mx-auto flex flex-col gap-5 lg:gap-8">
+        {{ partial:vendor/statamic/forms/error_summary }}
+
+        {{ if {session:has key="success"} }}
+            {{ session }}
+                {{ partial:components/notification
+                    :title="success"
+                    type="success"
+                    show_icon="true"
+                }}
+            {{ /session }}
+        {{ /if }}
+
+        {{ if {session:has key="error"} }}
+            {{ session }}
+                {{ partial:components/notification
+                    :title="error"
+                    type="error"
+                    show_icon="true"
+                }}
+            {{ /session }}
+        {{ /if }}
+
+        {{ partial:statamic-auth::components/update_details_form }}
+
+        {{ if config:statamic-auth.account.users_can_update_password }}
+            {{ partial:statamic-auth::components/update_password_form }}
+        {{ /if }}
+
+        {{ if config:statamic-auth:two_factor.enabled }}
+            {{ partial:statamic-auth::components/two_factor_widget }}
+        {{ /if }}
+
+        <div class="flex gap-2 lg:gap-3 justify-center">
+            {{ if config:statamic-auth.account.users_can_delete_account }}
+                <form action="{{ route:auth.account.delete }}" method="POST">
+                    {{ partial:statamic-auth::method method="DELETE" }}
+                    <input type="hidden" name="_token" value="{{ csrf_token }}">
+                    {{ partial:components/button
+                        as="button"
+                        label="Delete Account"
+                        size="sm"
+                        color="red"
+                    }}
+                </form>
+            {{ /if }}
+
+            <form action="{{ route:auth.logout }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token }}">
+                {{ partial:components/button
+                    as="button"
+                    label="Log Out"
+                    size="sm"
+                    color="secondary"
+                }}
+            </form>
+        </div>
+    </div>
+</main>

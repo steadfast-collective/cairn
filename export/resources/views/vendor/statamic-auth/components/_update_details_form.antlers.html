@@ -1,0 +1,99 @@
+<form
+    class="p-6 lg:p-10 bg-grey-100 rounded-2xl flex flex-col gap-4 lg:gap-6 items-start"
+    action="{{ route:auth.account.details.update}}"
+    method="POST"
+    novalidate
+>
+    <input type="hidden" name="_token" value="{{ csrf_token }}" />
+    {{ partial:statamic-auth::method method="PATCH" }}
+
+    {{ partial:typography/h4 as="h1" content="My Details" weight="font-semibold" class="text-center w-full" }}
+
+
+    <div class="w-full flex flex-col gap-3 lg:gap-4">
+        {{ partial:vendor/statamic/forms/field_wrapper }}
+            {{ partial:vendor/statamic/forms/label handle="email" title="Email Address" }}
+
+            {{ partial:vendor/statamic/forms/error
+                id="email"
+                error="{get_error:email}"
+            }}
+
+            {{ partial:vendor/statamic/forms/fields/text
+                handle="email"
+                autocomplete="email"
+                type="email"
+                no_js="true"
+                error="{get_error:email}"
+                :old="old:email"
+                :value="current_user:email"
+            }}
+        {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+
+        {{ if separate_name_fields }}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 w-full">
+                {{ partial:vendor/statamic/forms/field_wrapper }}
+                    {{ partial:vendor/statamic/forms/label handle="first_name" title="First Name" }}
+
+                    {{ partial:vendor/statamic/forms/error
+                        id="first_name"
+                        error="{get_error:first_name}"
+                    }}
+
+                    {{ partial:vendor/statamic/forms/fields/text
+                        handle="first_name"
+                        autocomplete="given-name"
+                        no_js="true"
+                        error="{get_error:first_name}"
+                        :old="old:first_name"
+                        :value="current_user:first_name"
+                    }}
+                {{ /partial:vendor/statamic/forms/field_wrapper }}
+
+                {{ partial:vendor/statamic/forms/field_wrapper }}
+                    {{ partial:vendor/statamic/forms/label handle="last_name" title="Last Name" }}
+
+                    {{ partial:vendor/statamic/forms/error
+                        id="last_name"
+                        error="{get_error:last_name}"
+                    }}
+
+                    {{ partial:vendor/statamic/forms/fields/text
+                        handle="last_name"
+                        autocomplete="family-name"
+                        no_js="true"
+                        error="{get_error:last_name}"
+                        :old="old:last_name"
+                        :value="current_user:last_name"
+                    }}
+                {{ /partial:vendor/statamic/forms/field_wrapper }}
+            </div>
+        {{ else }}
+            {{ partial:vendor/statamic/forms/field_wrapper }}
+                {{ partial:vendor/statamic/forms/label handle="name" title="Name" }}
+
+                {{ partial:vendor/statamic/forms/error
+                    id="name"
+                    error="{get_error:name}"
+                }}
+
+                {{ partial:vendor/statamic/forms/fields/text
+                    handle="name"
+                    autocomplete="name"
+                    no_js="true"
+                    error="{get_error:name}"
+                    :old="old:name"
+                    :value="current_user:name"
+                }}
+            {{ /partial:vendor/statamic/forms/field_wrapper }}
+        {{ /if }}
+    </div>
+
+    {{ partial:components/button
+        as="button"
+        label="Update My Details"
+        size="sm"
+        color="secondary"
+    }}
+</form>

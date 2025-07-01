@@ -39,4 +39,36 @@
         {{ partial:typography/h3 content="Tabs" }}
         {{ partial:dev/tabs }}
     </div>
+
+    <div class="p-4 border border-dashed border-[#9747FF] rounded-[5px] flex flex-col gap-4">
+        {{ partial:typography/h3 content="Notifications" }}
+
+        {{ partial:components/notification
+            title="Verify identification"
+            body="Please verify your identification so we can send your new card"
+            type="warning"
+            show_icon="true"
+        }}
+
+        {{ partial:components/notification
+            title="Card expired"
+            body="Please update your card details to complete your purchase"
+            type="error"
+            show_icon="true"
+        }}
+
+        {{ partial:components/notification
+            title="Card added"
+            body="Your card has been added and is ready to use"
+            type="success"
+            show_icon="true"
+        }}
+
+        {{ partial:components/notification
+            title="Card added"
+            body="Your card has been added and is ready to use"
+            type="info"
+            show_icon="true"
+        }}
+    </div>
 </div>

@@ -1,0 +1,5 @@
+{{ if {session:has key="status"} }}
+    <div class="p-4 rounded border border-green-400">
+        {{ session:status }}
+    </div>
+{{ /if }}

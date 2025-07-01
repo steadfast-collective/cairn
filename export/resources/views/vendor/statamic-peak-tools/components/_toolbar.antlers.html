@@ -5,7 +5,7 @@
 
 <!-- statamic-peak-tools::components/_toolbar.antlers.html -->
 {{ nocache }}
-    {{ if logged_in }}
+    {{ user:can do="access cp" }}
         <nav
             class="fixed top-0 left-0 w-full text-xs bg-gray-800 z-50 hidden md:flex divide-x divide-gray-300 divide-solid"
             x-data="{
@@ -145,6 +145,6 @@
 
             </ul>
         </nav>
-    {{ /if }}
+    {{ /user:can }}
 {{ /nocache }}
 <!-- End: statamic-peak-tools::components/_toolbar.antlers.html -->

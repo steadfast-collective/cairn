@@ -24,6 +24,7 @@
     {{ error ?= 'aria-describedby="error-{id}"' }}
     {{ character_limit ?= 'maxlength="{character_limit}"' }}
     {{ autocomplete ?= 'autocomplete="{autocomplete}"' }}
+    {{ autofocus ?= 'autofocus' }}
     {{ if old or old === '' }}
         value="{{ old }}"
     {{ elseif value }}

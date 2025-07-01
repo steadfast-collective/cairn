@@ -1,0 +1,25 @@
+{{ get_errors }}
+    <div
+        class="border border-red-300 rounded-lg text-tones-900 p-4 lg:p-6 bg-white w-full"
+        role="alert"
+        aria-labelledby="error-summary-title"
+        tabindex="-1"
+    >
+        <h3 class="text-lg" id="error-summary-title">There are issues with the form input:</h3>
+
+        <ul class="list-inside list-disc mt-2 text-red-500" role="list">
+            {{ fields }}
+                {{ messages }}
+                    <li>
+                        <a
+                            href="#{{ field }}"
+                            class="decoration-2 underline underline-offset-4 motion-safe:transition-colors text-red-500 hover:text-red-700"
+                        >
+                            {{ message }}
+                        </a>
+                    </li>
+                {{ /messages }}
+            {{ /fields }}
+        </ul>
+    </div>
+{{ /get_errors }}
