@@ -104,7 +104,10 @@ return [
         resource_path('preferences.yaml'),
         resource_path('sites.yaml'),
         storage_path('forms'),
-        public_path('assets'),
+        public_path('images'),
+        public_path('favicons'),
+        public_path('files'),
+        public_path('social_images'),
     ],
 
     /*

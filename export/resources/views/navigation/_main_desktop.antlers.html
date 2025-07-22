@@ -14,9 +14,9 @@
                     {{ if children }}
                         x-data="{ subnavOpen: false }"
                         @keyup.escape.stop.prevent="subnavOpen = false"
-                        @mouseover.away="subnavOpen = false"
-                        @focusin="subnavOpen = true"
-                        @focusout="subnavOpen = false"
+                        @mouseenter="!isTouch && (subnavOpen = true)"
+                        @mouseleave="!isTouch && (subnavOpen = false)"
+                        @click.away="subnavOpen = false"
                     {{ /if }}
                     class="leading-none h-full flex flex-none"
                 >
@@ -29,11 +29,6 @@
                         "
                         href="{{ url }}"
                         {{ if children }}
-                            @mouseover="subnavOpen = true"
-                            @click.prevent="subnavOpen = true"
-                            :aria-label="subnavOpen
-                                ? '{{ trans:strings.subnav_close }}'
-                                : '{{ trans:strings.subnav_open }}'"
                             :aria-expanded="subnavOpen"
                             {{ is_current ?= 'aria-current="page"' }}
                             :class="{
@@ -43,17 +38,29 @@
                     >
                         {{ title }}
                         {{ if children }}
-                            <div :class="{ 'scale-y-[-1]': subnavOpen }" class="motion-safe:transition-transform">
+                            <button
+                                :class="{ 'scale-y-[-1]': subnavOpen }"
+                                class="motion-safe:transition-transform"
+                                class="motion-safe:transition-transform"
+                                @click.prevent="subnavOpen = ! subnavOpen"
+                                :aria-label="subnavOpen ? 'close {{ title }} sub menu' : 'open {{ title }} sub menu'"
+                            >
                                 {{ svg:chevron-down class="size-4 ml-2 overflow-visible stroke-current " aria-hidden="true" }}
-                            </div>
+                            </button>
                         {{ /if }}
                     </a>
                     {{ if children }}
+                        <template x-teleport="body">
+                            <div
+                                x-show="subnavOpen"
+                                x-transition.opacity
+                                x-cloak
+                                class="pointer-events-none fixed left-0 top-50px w-full h-screen w-screen bg-black/50"></div>
+                        </template>
                         <div
                             x-show="subnavOpen"
                             x-ref="subnav"
-                            class="absolute left-0 top-full w-full h-screen bg-black/50"
-                            @click.outside="subnavOpen = false"
+                            class="absolute left-0 top-full w-full h-auto"
                             x-transition.opacity
                             x-cloak
                         >

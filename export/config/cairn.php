@@ -9,6 +9,14 @@ return [
             // Default fields to apply to blocks
             'default_fields' => [
                 [
+                    'handle' => 'settings',
+                    'field' => [
+                        'tab_icon' => 'settings-vertical',
+                        'type' => 'tab',
+                        'display' => "Settings"
+                    ]
+                ],
+                [
                     'handle' => 'anchor_id',
                     'field' =>  'common.anchor_id'
                 ],

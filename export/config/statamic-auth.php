@@ -23,14 +23,14 @@ return [
      * Redirect after register / login
      * Please use route name
      */
-    'redirect' => "auth.account.index",
+    'redirect' => "statamic.cp.dashboard",
 
     /**
      * Users can register.
      * Setting this to false will disable the register routes
      */
     'register' => [
-        'enabled' => true,
+        'enabled' => false,
         'prefix' => 'register',
     ],
 
@@ -39,7 +39,7 @@ return [
      * setting 'enabled' to false will disable the account routes
      */
     'account' => [
-        'enabled' => true,
+        'enabled' => false,
         'prefix' => 'my-account',
         'layout' => 'layout',
         'users_can_delete_account' => true,
@@ -50,7 +50,7 @@ return [
      * Two Factor authentication
      */
     'two_factor' => [
-        'enabled' => true,
+        'enabled' => false,
     ],
 
     /**
