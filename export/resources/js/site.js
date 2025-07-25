@@ -9,6 +9,7 @@ import precognition from 'laravel-precognition-alpine';
 import './tooltip.js'
 import './textareaCharacterLimit.js'
 import './password-rules.js'
+import './header.js'
 
 // Call Alpine.
 window.Alpine = Alpine
