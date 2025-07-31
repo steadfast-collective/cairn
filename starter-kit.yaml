@@ -67,7 +67,7 @@ dependencies:
   laravel/nightwatch: ^1.8
   statamic/eloquent-driver: ^4.25
   steadfast-collective/statamic-auth: dev-main
-  steadfast-collective/statamic-google-maps-autocomplete: ^1.3
+  steadfast-collective/statamic-google-maps-autocomplete: ^1.4
   studio1902/statamic-peak-browser-appearance: ^3.6
   studio1902/statamic-peak-seo: ^8.23
   studio1902/statamic-peak-tools: ^7.3
