@@ -179,3 +179,19 @@ tabs:
                             default: 'https://x.com/'
                             type: hidden
                             display: Prefix
+                    tiktok:
+                      display: 'TikTok'
+                      icon: globe-world-wide-web
+                      fields:
+                        -
+                          handle: handlle
+                          field:
+                            prepend: 'https://www.tiktok.com/'
+                            type: text
+                            display: Handlle
+                        -
+                          handle: prefix
+                          field:
+                            default: 'https://www.tiktok.com/'
+                            type: hidden
+                            display: Prefix

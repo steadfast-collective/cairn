@@ -4,7 +4,7 @@
 #}}
 
 <!-- statamic-peak-tools::components/_toolbar.antlers.html -->
-{{ nocache }}
+{{ nocache select="@auto" }}
     {{ user:can do="access cp" }}
         <nav
             class="fixed top-0 left-0 w-full text-xs bg-gray-800 z-50 hidden md:flex divide-x divide-gray-300 divide-solid"
@@ -12,7 +12,7 @@
                 toolbarVisible: $persist(true).as('toolbarVisible'),
                 collapsed: $persist(false).as('collapsed')
             }"
-            x-init="document.body.classList.add('pt-8')"
+            x-init="document.body.classList.add('lg:pt-8')"
             x-ref="toolbar"
             :class="{
                 'opacity-100': toolbarVisible,
@@ -48,13 +48,38 @@
                 }}
                 {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
 
-                {{ partial:vendor/statamic-peak-tools/components/toolbar_item
-                    link="{{ edit_url }}"
-                    accessible_title="Edit entry in CP"
-                    icon="edit"
-                    title="Edit {{ collection:handle | singular | title }}"
-                }}
-                {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                {{? $runwayInstalled = class_exists('StatamicRadPack\Runway\Routing\RoutingModel') ?}}
+
+                {{ if runwayInstalled }}
+                    {{? $isRunwayRoute = $page instanceof StatamicRadPack\Runway\Routing\RoutingModel ?}}
+                    {{ if isRunwayRoute }}
+                        {{? $resource = $page->resource() ?}}
+
+                        {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                            link="{{ model->runwayEditUrl() }}"
+                            accessible_title="Edit {{ resource:name | singular }} in CP"
+                            icon="edit"
+                            title="Edit {{ resource:name | singular | title }}"
+                        }}
+                        {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                    {{ else }}
+                        {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                            link="{{ edit_url }}"
+                            accessible_title="Edit entry in CP"
+                            icon="edit"
+                            title="Edit {{ collection:handle | singular | title }}"
+                        }}
+                        {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                    {{ /if }}
+                {{ else }}
+                        {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                        link="{{ edit_url }}"
+                        accessible_title="Edit entry in CP"
+                        icon="edit"
+                        title="Edit {{ collection:handle | singular | title }}"
+                    }}
+                    {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                {{ /if }}
 
                 {{ partial:vendor/statamic-peak-tools/components/toolbar_item
                     link="{{ route:statamic.cp.collections.index }}"
