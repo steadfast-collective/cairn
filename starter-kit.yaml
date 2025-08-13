@@ -73,3 +73,7 @@ dependencies:
   studio1902/statamic-peak-tools: ^7.3
 dependencies_dev:
   spatie/laravel-ray: ^1.40
+modules:
+  feedbucket:
+    dependencies:
+      steadfast-collective/statamic-feedbucket: ^1.0

@@ -1,6 +1,0 @@
-title: Feedbucket
-data:
-  local: false
-  staging: false
-  production: false
-  feedbucket_id:
