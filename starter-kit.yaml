@@ -68,12 +68,9 @@ dependencies:
   statamic/eloquent-driver: ^4.25
   steadfast-collective/statamic-auth: dev-main
   steadfast-collective/statamic-google-maps-autocomplete: ^1.4
+  steadfast-collective/statamic-feedbucket: ^1.0
   studio1902/statamic-peak-browser-appearance: ^3.6
   studio1902/statamic-peak-seo: ^8.23
   studio1902/statamic-peak-tools: ^7.3
 dependencies_dev:
   spatie/laravel-ray: ^1.40
-modules:
-  feedbucket:
-    dependencies:
-      steadfast-collective/statamic-feedbucket: ^1.0
