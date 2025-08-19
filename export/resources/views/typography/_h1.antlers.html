@@ -9,5 +9,5 @@
 #}}
 
 <!-- /typography/_h1.antlers.html -->
-<{{ as or 'h1' }} class="text-5xl md:text-[64px] md:leading-[72px] {{ weight or 'font-semibold' }} {{ color or 'text-black' }} {{ class }}">{{ content | nl2br }}</{{ as or 'h1' }}>
+<{{ as or 'h1' }} class="text-5xl md:text-[64px] md:leading-[72px] {{ weight or 'font-semibold' }} {{ color or 'text-black' }} {{ class }}">{{ content ?= {content | nl2br} }}{{ slot }}</{{ as or 'h1' }}>
 <!-- End: /typography/_h1.antlers.html -->

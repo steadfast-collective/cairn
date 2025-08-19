@@ -80,3 +80,13 @@ fields:
                         field:
                           type: text
                           display: Caption
+            video:
+              display: Video
+              instructions: 'Embed video'
+              icon: social-youtube
+              fields:
+                -
+                  handle: video_url
+                  field:
+                    type: video
+                    display: 'Video URL'

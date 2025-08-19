@@ -1,0 +1,16 @@
+{{ if video_type == 'video' }}
+    {{ if video_file }}
+        <video controls class="{{ class }}">
+            <source src="{{ video_file }}" type="{{ video_file:mime_type }}"/>
+        </video>
+    {{ /if }}
+{{ else }}
+    {{ partial:components/consent_gate class="{class}" }}
+        <iframe class="{{ iframe_class }} absolute top-0 left-0 w-full h-full" width="100%" src="{{ video_url | embed_url }}" height="auto" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {{ if caption }}
+            <figcaption class="{{ caption_class ?? 'text-sm' }}">
+                {{ caption }}
+            </figcaption>
+        {{ /if }}
+    {{ /partial:components/consent_gate }}
+{{ /if }}

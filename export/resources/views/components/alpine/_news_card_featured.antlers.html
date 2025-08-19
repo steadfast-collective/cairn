@@ -1,0 +1,46 @@
+<div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+    <div class="flex flex-col gap-3 lg:gap-4 lg:max-w-[520px]">
+        <div class="flex flex-col gap-2 lg:gap-3 items-start">
+            {{ partial:typography/h4 weight="font-semibold" }}
+                <a :href="featuredArticle.url" x-text="featuredArticle.title" class="hover:underline"></a>
+            {{ /partial:typography/h4 }}
+
+            {{ partial:components/tag }}
+                {{ slot:attributes }}
+                    x-text="featuredArticle.date"
+                {{ /slot:attributes }}
+            {{ /partial:components/tag }}
+        </div>
+
+        <template x-if="featuredArticle.excerpt">
+            <p class="text-base text-grey-800 font-normal" x-html="featuredArticle.excerpt"></p>
+        </template>
+    </div>
+
+    <a :href="featuredArticle.url" :title="`View ${featuredArticle.title}`" class="w-full lg:max-w-[680px]">
+        <template x-if="featuredArticle.featured_image">
+            <figure class="flex flex-col gap-4">
+                <picture>
+                    <source :srcset="featuredArticle.featured_image.webp.url" type="image/webp"/>
+                    <source :srcset="featuredArticle.featured_image.jpeg.url" type="image/jpg" />
+                    <img :src="featuredArticle.featured_image.jpeg.url" :alt="featuredArticle.featured_image.alt"
+                        class="w-full h-full object-cover rounded-xl aspect-[187/130] lg:aspect-[10/7]"
+                        width="680"
+                        height="480"
+                        loading="lazy" />
+                </picture>
+            </figure>
+        </template>
+
+        <template x-if="!featuredArticle.featured_image">
+            {{
+                partial:components/image
+                :url="article_settings:image"
+                image_width="600"
+                image_height="480"
+                image_class="w-full h-full object-cover rounded-xl aspect-[187/130] lg:aspect-[10/7]"
+                figure_class="lg:max-w-[680px] w-full"
+            }}
+        </template>
+    </a>
+</div>

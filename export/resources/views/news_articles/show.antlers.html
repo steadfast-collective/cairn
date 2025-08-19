@@ -1,0 +1,26 @@
+<main >
+    <div class="max-w-[1088px] w-full mx-auto px-5 py-6 lg:py-12 flex flex-col gap-6 lg:gap-10">
+        {{ featured_image }}
+            {{
+                partial:components/image
+                image_width="1048"
+                image_height="400"
+                image_class="rounded-lg lg:rounded-xl"
+            }}
+        {{ /featured_image  }}
+
+        <div class="flex flex-col gap-4 lg:gap-6">
+            {{ partial:typography/h4 as="h1" :content="title" weight="font-semibold" }}
+
+            {{ partial:typography/prose }}
+                {{ content }}
+                    {{ partial:if_exists src="partials/sets/{type}" }}
+                {{ /content }}
+            {{ /partial:typography/prose }}
+        </div>
+
+        {{# share #}}
+        {{ partial:partials/social_share include_copy_url_button="true" }}
+
+    </div>
+</main>

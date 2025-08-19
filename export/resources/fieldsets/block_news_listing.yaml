@@ -1,0 +1,32 @@
+title: 'Block: News Listing'
+fields:
+  -
+    handle: general_tab
+    field:
+      type: tab
+      display: General
+  -
+    handle: show_featured_article
+    field:
+      type: toggle
+      display: 'Show Featured Article?'
+  -
+    handle: featured_article
+    field:
+      max_items: 1
+      collections:
+        - news_articles
+      type: entries
+      display: 'Featured Article'
+      if:
+        show_featured_article: 'equals true'
+      instructions: 'If left empty, latest article will be shown'
+  -
+    handle: settings
+    field:
+      tab_icon: settings-vertical
+      type: tab
+      display: Settings
+  -
+    handle: anchor_id
+    field: common.anchor_id

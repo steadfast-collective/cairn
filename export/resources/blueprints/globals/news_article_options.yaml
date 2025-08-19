@@ -1,0 +1,13 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: placeholder_image
+            field:
+              max_files: 1
+              container: images
+              type: assets
+              display: 'Placeholder Image'

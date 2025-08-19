@@ -1,0 +1,68 @@
+<template x-if="!loading && !error && pagination.lastPage > 1 && items.length > 0">
+    <div class="sm:block">
+        <nav class="w-full flex items-center justify-between gap-4">
+            {{ partial:components/button
+                label="Prev"
+                style="text"
+                icon="arrow-left"
+                icon_position="before"
+                :color="color"
+                as="button"
+            }}
+                {{ slot:attributes }}
+                    :href="`{{ url }}?page=${pagination.currentPage - 1}`"
+                    :disabled="!pagination.prev"
+                    @click.prevent="changePage(pagination.currentPage - 1)"
+                    :class="{
+                        'pointer-events-none opacity-50' : !pagination.prev
+                    }"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+
+            <ul class="hidden sm:flex pagination-list gap-2">
+                <template x-for="(page, index) in pageRange" :key="index">
+                    <li
+                        :class="{
+                            'active': pagination.currentPage === page.number,
+                            'spacer pointer-events-none' : page.type === 'ellipsis'
+                        }">
+                        <template x-if="page.type === 'ellipsis'">
+                            <span>...</span>
+                        </template>
+                        <template x-if="page.type === 'page'">
+                            <a
+                                x-text="page.number"
+                                :disabled="pagination.currentPage === page.number"
+                                @click.prevent="changePage(page.number)"
+                                :aria-label="`Load page ${page.number}`"
+                                :href="`{{ url }}?page=${page.number}`"
+                            ></a>
+                        </template>
+                    </li>
+                </template>
+            </ul>
+
+            <span class="sm:hidden" x-text="`${pagination.currentPage} of ${pagination.lastPage}`"></span>
+
+            {{ partial:components/button
+                label="Next"
+                style="text"
+                icon="arrow-right"
+                icon_position="after"
+                :color="color"
+                as="button"
+            }}
+                {{ slot:attributes }}
+                    :disabled="!pagination.next"
+                    :href="`{{ url }}?page=${pagination.currentPage + 1}`"
+                    @click.prevent="changePage(pagination.currentPage + 1)"
+                    :class="{
+                        'pointer-events-none opacity-50' : !pagination.next
+                    }"
+                {{ /slot:attributes }}
+            {{ /partial:components/button }}
+
+        </nav>
+    </div>
+</template>

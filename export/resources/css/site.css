@@ -75,3 +75,22 @@
 [x-cloak] {
     display: none;
 }
+
+.pagination-list {
+    li {
+        a, span, button {
+            @apply text-base text-grey-600 border border-grey-300 font-normal motion-safe:transition-colors size-10 rounded-lg flex items-center justify-center;
+        }
+
+        &.active,
+        &:hover:not(.disabled) {
+            a, span, button {
+                @apply font-semibold bg-primary-100 border-primary-100 hover:cursor-pointer;
+            }
+        }
+
+        &.active {
+            @apply pointer-events-none;
+        }
+    }
+}

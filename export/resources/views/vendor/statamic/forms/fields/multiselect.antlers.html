@@ -1,0 +1,137 @@
+<div
+    x-data="{
+        expand: false,
+        focusedIndex: -1,
+        get items() {
+            return this.$refs.list?.querySelectorAll('[role=option] label') || [];
+        },
+        handleKeyDown(event) {
+            if (event.key === 'Escape') {
+                this.expand = false;
+                this.$refs.button.focus();
+                return;
+            }
+
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+
+                if (!this.expand) {
+                    this.openDropdown();
+                } else {
+                    if (this.focusedIndex >= 0 && this.items[this.focusedIndex]) {
+                        this.items[this.focusedIndex].querySelector('input').click();
+                    }
+                }
+                return;
+            }
+
+            if (this.expand && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+                event.preventDefault();
+                this.navigateOptions(event.key === 'ArrowDown' ? 1 : -1);
+            }
+        },
+        openDropdown() {
+            this.expand = true;
+            this.focusedIndex = -1;
+            this.$nextTick(() => {
+                this.focusFirstItem();
+            });
+        },
+        focusFirstItem() {
+            if (this.items.length > 0) {
+                this.focusedIndex = 0;
+                this.items[0].focus();
+            }
+        },
+        navigateOptions(direction) {
+            const newIndex = this.focusedIndex + direction;
+
+            if (newIndex >= 0 && newIndex < this.items.length) {
+                this.focusedIndex = newIndex;
+                this.items[newIndex].focus();
+            } else if (direction > 0 && newIndex >= this.items.length) {
+                // Wrap to first item
+                this.focusedIndex = 0;
+                this.items[0].focus();
+            } else if (direction < 0 && newIndex < 0) {
+                // Wrap to last item
+                this.focusedIndex = this.items.length - 1;
+                this.items[this.items.length - 1].focus();
+            }
+        },
+        get label () {
+            let selected = this.filterOptions?.{{ model }};
+
+            if(!selected) {
+                return null;
+            }
+
+            {{ if !single }}
+                if (selected.length >= 1) {
+                    return `${selected.length} selected`;
+                }
+            {{ else }}
+                if (selected) {
+                    return selected;
+                }
+            {{ /if }}
+
+            return null;
+        }
+    }"
+    @keydown="handleKeyDown($event)"
+    @click.away="expand = false"
+    @close="expand = false"
+    class="w-full {{ class }}"
+>
+    <label id="dropdown-label-{{ name }}" class="mb-2 text-sm flex gap-2 text-grey-500 items-center">
+        {{ label }}
+    </label>
+
+    <div class="grid grid-cols-1">
+        <div class="col-start-1 row-start-1 w-full relative p-0 bg-transparent border-none">
+            <button
+                x-ref="button"
+                id="dropdown-button-{{ name }}"
+                class="
+                    group flex w-full items-center justify-between gap-2 font-title hover:cursor-pointer
+                    py-2.5 pl-3 pr-2 bg-white text-black placeholder:text-grey-500 outline-offset-2 ring-0 border invalid:text-grey-500 border-grey-300 focus:border-primary focus:outline-none rounded-lg
+                    {{ input_classes }}
+                "
+                type="button"
+                @click="expand = !expand"
+                aria-haspopup="listbox"
+                :aria-expanded="expand"
+                aria-labelledby="dropdown-label-{{ name }}"
+            >
+                {{ if default_value }}
+                    <span class="truncate" x-text="label ?? '{{ default_value }}'">{{ default_value }}</span>
+                {{ else }}
+                    <span class="truncate" x-text="label ?? '{{ label }}'">{{ label }}</span>
+                {{ /if }}
+
+                <span
+                    class="motion-safe:transition-transform"
+                    :class="{
+                        'rotate-180': expand
+                    }"
+                >
+                    {{ svg:chevron-down class="size-4" }}
+                </span>
+            </button>
+
+            <ul
+                x-show="expand"
+                x-transition
+                x-cloak
+                class="absolute top-[calc(100%+8px)] right-0 z-10 max-h-60 flex flex-col w-full overflow-y-auto overscroll-contain custom-scrollbar bg-white border border-grey-200 rounded-lg shadow-lg"
+                role="listbox"
+                aria-labelledby="dropdown-label-{{ name }}"
+                tabindex="-1"
+                x-ref="list"
+            >
+                {{ slot }}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -67,4 +67,11 @@ fields:
               fields:
                 -
                   import: block_consent
+            news_listing:
+              display: 'News Listing'
+              icon: media-news-paper
+              instructions: ''
+              fields:
+                -
+                  import: block_news_listing
       width: 100

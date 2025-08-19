@@ -1,0 +1,57 @@
+<li
+    class="group flex w-full items-center"
+    role="option"
+    {{ if single }}
+        :aria-selected="{{ xmodel }} === `{{ value }}`"
+    {{ else }}
+        :aria-selected="{{ xmodel }}.includes(`{{ value }}`)"
+    {{ /if }}
+>
+    <label
+        class="border border-transparent group-first:rounded-t-lg group-last:rounded-b-lg py-2.5 px-3 inline-flex gap-3 justify-between items-center w-full hover:cursor-pointer hover:bg-grey-200 focus:bg-grey-200 focus-within:outline-none focus-within:border-primary"
+        :class="{
+            {{ if single }}
+                'bg-grey-200': {{ xmodel }} === `{{ value }}`
+            {{ else }}
+                'bg-grey-200': {{ xmodel }}.includes(`{{ value }}`)
+            {{ /if }}
+        }"
+        tabindex="0"
+        @focus="focusedIndex = Array.from($el.parentElement.parentElement.children).indexOf($el.parentElement)"
+    >
+        <input
+            x-ref="checkbox_{{ value | slug:'_' }}"
+            {{ if single }}
+                type="radio"
+                @change="$dispatch('close')"
+            {{ else }}
+                type="checkbox"
+            {{ /if }}
+            x-model.lazy="{{ xmodel }}"
+            class="sr-only peer"
+            name="{{ handle }}"
+            value="{{ value }}"
+            id="checkbox-{{ value | slug:'_' }}"
+            tabindex="-1"
+        >
+
+        <span class="text-base">
+            {{ trans :key="label" }}
+        </span>
+
+        <span
+            :class="{
+                {{ if single }}
+                    'opacity-0': {{ xmodel }} != `{{ value }}`,
+                    'opacity-100': {{ xmodel }} ===`{{ value }}`
+                {{ else }}
+                    'opacity-0': !{{ xmodel }}.includes(`{{ value }}`),
+                    'opacity-100': {{ xmodel }}.includes(`{{ value }}`)
+                {{ /if }}
+            }"
+            class="text-primary"
+        >
+            {{ svg:check class="size-4" }}
+        </span>
+    </label>
+</li>

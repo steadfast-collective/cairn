@@ -1,5 +1,6 @@
 <{{ as or 'span' }}
     class="bg-primary-100 text-xs text-grey-700 inline-flex items-center gap-1 px-2 py-1 rounded-lg font-medium"
+    {{ slot:attributes }}
 >
     {{ if icon && (icon_position == 'before' or icon_position == 'both') }}
         {{ svg

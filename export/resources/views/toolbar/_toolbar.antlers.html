@@ -1,0 +1,175 @@
+{{#
+    @name Peak toolbar
+    @desc The Peak toolbar component displaying debug information.
+#}}
+
+<!-- statamic-peak-tools::components/_toolbar.antlers.html -->
+{{ nocache select="@auto" }}
+    {{ user:can do="access cp" }}
+        <nav
+            class="fixed top-0 left-0 w-full text-xs bg-gray-800 z-50 hidden md:flex divide-x divide-gray-300 divide-solid"
+            x-data="{
+                toolbarVisible: $persist(true).as('toolbarVisible'),
+                collapsed: $persist(false).as('collapsed')
+            }"
+            x-init="document.body.classList.add('lg:pt-8')"
+            x-ref="toolbar"
+            :class="{
+                'opacity-100': toolbarVisible,
+                'opacity-0': !toolbarVisible,
+                'w-min': collapsed
+            }"
+            x-cloak
+            aria-label="Toolbar"
+        >
+            <button
+                @click="collapsed = !collapsed"
+                class="flex items-center h-8 hover:bg-gray-600 focus:bg-gray-600 hover:cursor-pointer"
+                :title="collapsed ? 'Expand toolbar' : 'Collapse toolbar'"
+            >
+                <span x-show="!collapsed">
+                    {{ svg src="chevron-left" class="text-white size-5" }}
+                </span>
+                <span x-show="collapsed">
+                    {{ svg src="chevron-right" class="text-white size-5" }}
+                </span>
+            </button>
+            <ul
+                class="flex w-full divide-x divide-gray-300 divide-solid motion-safe:transition-opacity hover:opacity-100 has-[button:focus,a:focus]:opacity-100"
+                x-show="!collapsed"
+                x-cloak
+            >
+                {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                    link="{{ route:statamic.cp.dashboard }}"
+                    accessible_title="Statamic Dashboard"
+                    aria_label="Open Statamic Dashboard"
+                    icon="statamic"
+                    title="Dashboard"
+                }}
+                {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+
+                {{? $runwayInstalled = class_exists('StatamicRadPack\Runway\Routing\RoutingModel') ?}}
+
+                {{ if runwayInstalled }}
+                    {{? $isRunwayRoute = $page instanceof StatamicRadPack\Runway\Routing\RoutingModel ?}}
+                    {{ if isRunwayRoute }}
+                        {{? $resource = $page->resource() ?}}
+
+                        {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                            link="{{ model->runwayEditUrl() }}"
+                            accessible_title="Edit {{ resource:name | singular }} in CP"
+                            icon="edit"
+                            title="Edit {{ resource:name | singular | title }}"
+                        }}
+                        {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                    {{ else }}
+                        {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                            link="{{ edit_url }}"
+                            accessible_title="Edit entry in CP"
+                            icon="edit"
+                            title="Edit {{ collection:title | singular | title }}"
+                        }}
+                        {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                    {{ /if }}
+                {{ else }}
+                    {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                        link="{{ edit_url }}"
+                        accessible_title="Edit entry in CP"
+                        icon="edit"
+                        title="Edit {{ collection:title | singular | title }}"
+                    }}
+                    {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                {{ /if }}
+
+                {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                    link="{{ route:statamic.cp.collections.index }}"
+                    accessible_title="New Entry"
+                    icon="plus"
+                    title="New"
+                    children="true"
+                }}
+                    {{ collections }}
+                        {{ partial:vendor/statamic-peak-tools/components/toolbar_item
+                            link="{{ route:statamic.cp.collections.entries.create :collection="handle" :site="site" }}"
+                            accessible_title="Create new {{ title | singular }}"
+                            title="{{ title | singular }}"
+                        }}
+                        {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+                    {{ /collections }}
+                {{ /partial:vendor/statamic-peak-tools/components/toolbar_item }}
+
+                <li
+                    x-data="{ isOpen: false }"
+                    @keyup.escape.window="isOpen = false"
+                    @mouseenter="!('ontouchstart' in window) && (isOpen = true)"
+                    @mouseleave="!('ontouchstart' in window) && (isOpen = false)"
+                    class="relative {{ class }}"
+                >
+                    <a
+                        href="#"
+                        @click.prevent="isOpen = !isOpen"
+                        :aria-expanded="isOpen"
+                        target="_blank"
+                        class="flex gap-1 items-center p-2 space-x-1 text-gray-100 bg-gray-900 hover:bg-gray-600 focus:bg-gray-600"
+                    >
+                        <picture>
+                            <img
+                                src="{{ current_user:avatar ?? {current_user:email | gravatar} }}"
+                                class="size-4 rounded-full object-cover"
+                            />
+                        </picture>
+                        <span>Hi, {{ current_user:name }}</span>
+                    </a>
+
+                    <ul
+                        x-show="isOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="absolute left-0 right-0 top-full bg-gray-900 flex flex-col w-max"
+                        @click.away="isOpen = false"
+                    >
+                        <li>
+                            <a
+                                href="{{ current_user:edit_url }}"
+                                target="_blank"
+                                class="flex gap-1 items-center p-2 space-x-1 text-gray-100 bg-gray-900 hover:bg-gray-600 focus:bg-gray-600"
+                            >
+                                <span>Edit Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="{{ user:logout_url }}"
+                                target="_blank"
+                                class="flex gap-1 items-center p-2 space-x-1 text-gray-100 bg-gray-900 hover:bg-gray-600 focus:bg-gray-600"
+                            >
+                                {{ svg src="logout" attr:class="w-4 h-4" attr:alt="" attr:aria-hidden="true" }}
+                                <span>Log out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                {{ if environment == 'local' }}
+                    <li class="ml-auto mr-0">
+                        <span
+                            title="Current Tailwind breakpoint"
+                            class="flex gap-1 items-center p-2 space-x-1 text-yellow-800 bg-yellow-200"
+                        >
+                            {{ svg:breakpoint attr:class="w-4 h-4 fill-current" attr:alt="" attr:aria-hidden="true" }}
+                            <span class="breakpoint"></span>
+                        </span>
+                    </li>
+                {{ /if }}
+
+
+            </ul>
+        </nav>
+    {{ /user:can }}
+{{ /nocache }}
+<!-- End: statamic-peak-tools::components/_toolbar.antlers.html -->

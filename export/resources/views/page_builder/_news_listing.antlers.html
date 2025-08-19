@@ -1,0 +1,104 @@
+{{#
+    @name News Listing
+    @desc The News Listing page builder block.
+    @set page.page_builder.news_listing
+#}}
+
+<!-- /page_builder/_news_listing.antlers.html -->
+{{ partial:page_builder/block }}
+    <div
+        class="max-w-[1440px] w-full mx-auto xl:px-[88px] px-5 py-6 lg:py-12 flex flex-col gap-5 gap-8"
+        x-data='articleListing({
+            page: {{ get:page ?? 1 }},
+            featured: {{ block:show_featured_article ? '"{{ block:featured_article:id }}"' : 'false' }}
+        })'
+    >
+        <div class="sr-only" aria-live="polite">
+            <span class="sr-only" x-text="announceText"></span>
+            <span class="visible">Page <span x-text="currentPage"></span> of <span x-text="lastPage"></span></span>
+        </div>
+
+        <template x-if="loading">
+            <div
+                class="animate-pulse grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8"
+            >
+                {{ if block:show_featured_article }}
+                    <div class="md:col-span-2">
+                        {{ partial:components/alpine/skeletons/news_card_featured }}
+                    </div>
+                {{ /if }}
+
+                <template x-for="i in 12">
+                    <div>
+                        {{ partial:components/alpine/skeletons/news_card }}
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <template x-if="!loading && error">
+            <div class="text-center justify-center items-center flex flex-col gap-4 py-8 lg:py-16">
+                {{ partial:typography/h4 content="There was an error fetching the articles"}}
+
+                {{ partial:components/button
+                    label="Try Again"
+                    as="button"
+                    style="text"
+                    icon="refresh-cw-01"
+                    icon_position="before"
+                    size="sm"
+                }}
+                    {{ slot:attributes }}
+                        @click="fetchItems"
+                        :disabled="loading"
+                    {{ /slot:attributes }}
+                {{ partial:components/button }}
+
+            </div>
+        </template>
+
+        <template x-if="!loading && (items.length > 0 || featuredArticle)">
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8"
+            >
+                {{ if block:show_featured_article }}
+                    <template x-if="featuredArticle">
+                        <div class="md:col-span-2">
+                            {{ partial:components/alpine/news_card_featured }}
+                        </div>
+                    </template>
+                {{ /if }}
+
+                <template x-if="featuredArticle && (items.length > 0)">
+                    <div class="md:col-span-2 py-4 lg:py-6">
+                        <div class="h-px bg-grey-300"></div>
+                    </div>
+                </template>
+
+                <template x-for="article in items" :key="article.id">
+                    <div>
+                        {{ partial:components/alpine/news_card }}
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <template x-if="!loading && items.length === 0 && !featuredArticle && !error">
+            <div class="text-center justify-center items-center flex flex-col gap-4 py-8 lg:py-16">
+                {{ partial:typography/h4 content="No articles found"}}
+            </div>
+        </template>
+
+        {{ partial:components/alpine/pagination }}
+
+        <template x-if="showFocusButton">
+            <button
+                @click="focusFirstNewItem(lastLoadedItems[0].id); showFocusButton = false"
+                class="sr-only"
+            >
+                Go to first new item
+            </button>
+        </template>
+    </div>
+{{ /partial:page_builder/block }}
+<!-- End: /page_builder/_news_listing.antlers.html -->
