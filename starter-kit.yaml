@@ -39,12 +39,7 @@ export_paths:
   - resources/css/typography.css
   - resources/fieldsets
   - resources/forms
-  - resources/js/site.js
-  - resources/js/tailwind.cairn.js
-  - resources/js/textareaCharacterLimit.js
-  - resources/js/tooltip.js
-  - resources/js/password-rules.js
-  - resources/js/header.js
+  - resources/js
   - resources/stubs
   - resources/svg
   - resources/users/groups.yaml
