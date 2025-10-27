@@ -3,6 +3,7 @@ export_paths:
   - .env.example
   - .gitignore
   - app/Console/Commands/MakeBlock.php
+  - app/Console/Commands/OrderReplicatorBlocks.php
   - app/Listeners/PreventDeletingMounts.php
   - app/Models/User.php
   - app/Tags/Collections.php
