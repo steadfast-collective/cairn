@@ -1,4 +1,6 @@
 updatable: true
+export_as:
+  README.md: README.example.md
 export_paths:
   - .env.example
   - .gitignore
@@ -13,8 +15,6 @@ export_paths:
   - bootstrap/app.php
   - config/filesystems.php
   - config/auth.php
-  - config/google2fa.php
-  - config/statamic-auth.php
   - config/statamic/assets.php
   - config/statamic/cp.php
   - config/statamic/editions.php
@@ -23,10 +23,11 @@ export_paths:
   - config/statamic/live_preview.php
   - config/statamic/search.php
   - config/statamic/static_caching.php
+  - config/statamic/system.php
   - config/statamic/users.php
   - config/statamic/eloquent-driver.php
+  - config/horizon.php
   - database/migrations/2025_06_26_140231_statamic_auth_tables.php
-  - database/migrations/2025_06_27_153503_add_two_factor_to_users.php
   - lang/
   - public/robots.txt
   - public/images
@@ -53,20 +54,18 @@ export_paths:
   - content
   - config/statamic/bard_texstyle.php
   - config/cairn.php
-export_as:
-  README.md: README.example.md
+  - .claude/
 dependencies:
-  doefom/currency-fieldtype: ^1.4
-  eminos/statamic-tabs: ^1.2
-  jacksleight/statamic-bard-texstyle: ^3.5
+  eminos/statamic-tabs: ^2.0
+  jacksleight/statamic-bard-texstyle: ^4.1
   laravel/horizon: ^5.33
   laravel/nightwatch: ^1.8
-  statamic/eloquent-driver: ^4.25
-  steadfast-collective/statamic-auth: dev-main
-  steadfast-collective/statamic-google-maps-autocomplete: ^1.4
-  steadfast-collective/statamic-feedbucket: ^1.0
-  studio1902/statamic-peak-browser-appearance: ^3.6
-  studio1902/statamic-peak-seo: ^8.23
-  studio1902/statamic-peak-tools: ^7.3
+  statamic/eloquent-driver: ^5.5
+  steadfast-collective/currency-fieldtype: ^2.0
+  steadfast-collective/statamic-cp-resources: ^5.0
+  steadfast-collective/statamic-feedbucket: ^2.0
+  steadfast-collective/statamic-google-maps-autocomplete: ^2.0
+  studio1902/statamic-peak-tools: ^9.0
 dependencies_dev:
+  laravel/boost: ^2.4
   spatie/laravel-ray: ^1.40

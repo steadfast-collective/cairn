@@ -1,0 +1,67 @@
+tabs:
+  trackers:
+    display: Trackers
+    sections:
+      -
+        display: Environments
+        instructions: 'When to render tracker tags and the consent banner.'
+        fields:
+          -
+            import: 'globals_seo_trackers_environments'
+      -
+        display: 'Site verifications'
+        instructions: 'Configure site verifications.'
+        fields:
+          -
+            import: 'globals_seo_trackers_site_verifications'
+      -
+        display: Analytics
+        instructions: 'Configure various Analytics Services.'
+        fields:
+          -
+            import: 'globals_seo_trackers_analytics'
+      -
+        display: 'Consent banner'
+        instructions: 'Configure Google trackers and scripts and optionally inject them after consent.'
+        fields:
+          -
+            import: 'globals_seo_trackers_consent'
+          -
+            handle: cookie_banner_title
+            field:
+              default: Consent
+              type: text
+              display: 'Cookie Banner Title'
+              always_save: false
+              if:
+                use_consent_banner: 'equals true'
+              localizable: false
+          -
+            handle: cookie_banner_text
+            field:
+              buttons:
+                - bold
+                - italic
+                - unorderedlist
+                - orderedlist
+                - removeformat
+                - anchor
+                - underline
+                - strikethrough
+              remove_empty_nodes: false
+              type: bard
+              display: 'Cookie Banner Text'
+              if:
+                use_consent_banner: 'equals true'
+              localizable: false
+          -
+            handle: manage_consent_page
+            field:
+              collections:
+                - pages
+              type: entries
+              display: 'Manage Consent Page'
+              if:
+                use_consent_banner: 'equals true'
+              max_items: 1
+              localizable: false

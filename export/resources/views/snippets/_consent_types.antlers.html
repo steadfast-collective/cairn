@@ -1,0 +1,193 @@
+{{#
+    @name Consent types
+    @desc Get the consent banner consent types.
+#}}
+
+<script>
+    let consentData = {
+        "consent": {{ (consent_banner:tracker_type == 'none' && consent_banner:hide_by_default) | bool_string }},
+        "date": null,
+        "preferencesUpdated": false,
+        "consent_api": {{ (consent_banner:tracker_type == 'gtag' || consent_banner:tracker_type == 'gtm' || consent_banner:tracker_type == 'sgtm') | bool_string }},
+        "custom_scripts": {{ (consent_banner:tracker_type == 'scripts') | bool_string }},
+        "types": [
+            {
+                "value": true,
+                "handle": "functionalCookies",
+                "title": "{{ trans:strings.consent_functional }}",
+                "explanation": "{{ trans:strings.consent_functional_explanation }}",
+                "disabled": true
+            },
+            {{ if consent_banner:tracker_type == 'gtag' || consent_banner:tracker_type == 'gtm' || consent_banner:tracker_type == 'sgtm' }}
+                {
+                    "value": false,
+                    "handle": "analyticsStorage",
+                    "title": "{{ trans:strings.consent_analytics }}",
+                    "explanation": "{{ trans:strings.consent_analytics_explanation }}",
+                    "consent_api": true,
+                    "consent_api_handle": "analytics_storage",
+                    {{ consent_banner:analytics_services }}
+                    "more_info_text": "{{ more_info_text }}",
+                    "show_purpose": "{{ show_purpose }}",
+                    "show_expiry": "{{ show_expiry }}",
+                    {{ if services }}
+                    "services": [
+                        {{ services }}
+                            {
+                                "name": "{{ name }}",
+                                "purpose": "{{ purpose }}",
+                                "expiry": "{{ expiry }}",
+                            },
+                        {{ /services }}
+                    ],
+                    {{ /if }}
+                    {{ /consent_banner:analytics_services }}
+                },
+            {{ /if }}
+            {{ if consent_banner:tracker_type == 'gtm' || consent_banner:tracker_type == 'sgtm' }}
+                {
+                    "value": false,
+                    "handle": "adStorage",
+                    "title": "{{ trans:strings.consent_ads }}",
+                    "explanation": "{{ trans:strings.consent_ads_explanation }}",
+                    "consent_api": true,
+                    "consent_api_handle": "ad_storage",
+                    {{ consent_banner:ad_storage_services }}
+                    "more_info_text": "{{ more_info_text }}",
+                    "show_purpose": "{{ show_purpose }}",
+                    "show_expiry": "{{ show_expiry }}",
+                    {{ if services }}
+                    "services": [
+                        {{ services }}
+                            {
+                                "name": "{{ name }}",
+                                "purpose": "{{ purpose }}",
+                                "expiry": "{{ expiry }}",
+                            },
+                        {{ /services }}
+                    ],
+                    {{ /if }}
+                    {{ /consent_banner:ad_storage_services }}
+                },
+                {
+                    "value": false,
+                    "handle": "adUserData",
+                    "title": "{{ trans:strings.consent_ad_user_data }}",
+                    "explanation": "{{ trans:strings.consent_ad_user_data_explanation }}",
+                    "consent_api": true,
+                    "consent_api_handle": "ad_user_data",
+                    {{ consent_banner:ad_user_data_services }}
+                    "more_info_text": "{{ more_info_text }}",
+                    "show_purpose": "{{ show_purpose }}",
+                    "show_expiry": "{{ show_expiry }}",
+                    {{ if services }}
+                    "services": [
+                        {{ services }}
+                            {
+                                "name": "{{ name }}",
+                                "purpose": "{{ purpose }}",
+                                "expiry": "{{ expiry }}",
+                            },
+                        {{ /services }}
+                    ],
+                    {{ /if }}
+                    {{ /consent_banner:ad_user_data_services }}
+                },
+                {
+                    "value": false,
+                    "handle": "adPersonalization",
+                    "title": "{{ trans:strings.consent_ad_personalization }}",
+                    "explanation": "{{ trans:strings.consent_ad_personalization_explanation }}",
+                    "consent_api": true,
+                    "consent_api_handle": "ad_personalization",
+                    {{ consent_banner:ad_personalization_services }}
+                    "more_info_text": "{{ more_info_text }}",
+                    "show_purpose": "{{ show_purpose }}",
+                    "show_expiry": "{{ show_expiry }}",
+                    {{ if services }}
+                    "services": [
+                        {{ services }}
+                            {
+                                "name": "{{ name }}",
+                                "purpose": "{{ purpose }}",
+                                "expiry": "{{ expiry }}",
+                            },
+                        {{ /services }}
+                    ],
+                    {{ /if }}
+                    {{ /consent_banner:ad_personalization_services }}
+                },
+            {{ /if }}
+            {{ if consent_banner:tracker_type == 'scripts' }}
+                {{ consent_banner:scripts }}
+                    {{ scope:scripts }}
+                        {
+                            "value": false,
+                            "handle": "customScript{{ count }}",
+                            "title": "{{ category | add_slashes | entities }}",
+                            "explanation": "{{ explainer | add_slashes | entities }}",
+                            "more_info_text": "{{ more_info_text }}",
+                            "show_purpose": "{{ show_purpose }}",
+                            "show_expiry": "{{ show_expiry }}",
+                            {{ if services }}
+                                "services": [
+                                    {{ services }}
+                                        {
+                                            "name": "{{ name }}",
+                                            "purpose": "{{ purpose }}",
+                                            "expiry": "{{ expiry }}",
+                                        },
+                                    {{ /services }}
+                                ],
+                            {{ /if }}
+                            "script_fragments": [
+                                {{ script_fragments }}
+                                    {
+                                        "category": "customScript{{ scripts:count }}",
+                                        "type": "{{ type }}",
+                                        "defer": {{ defer | bool_string }},
+                                        "async": {{ async | bool_string }},
+                                        "attributes": [
+                                            {{ script_attributes }}
+                                                {
+                                                    "key": "{{ attribute | slugify | entities }}",
+                                                    "value": {{ attribute_value ? { '"' + (attribute_value | add_slashes | entities) + '"' } : 'true' }}
+                                                },
+                                            {{ /script_attributes }}
+                                        ],
+                                        "source": "{{ source }}",
+                                        "inline_script": "{{ inline_script | remove_left('<script>') | remove_right('</script>') | add_slashes | collapse_whitespace }}"
+                                    },
+                                {{ /script_fragments }}
+                            ]
+                        },
+                    {{ /scope:scripts }}
+                {{ /consent_banner:scripts }}
+            {{ /if }}
+            {{ if consent_banner:embeds }}
+                {
+                    "value": false,
+                    "handle": "embeds",
+                    "title": "{{ trans:strings.consent_embeds }}",
+                    "explanation": "{{ trans:strings.consent_embeds_explanation }}",
+                    {{ consent_banner:embed_services }}
+                    "more_info_text": "{{ more_info_text }}",
+                    "show_purpose": "{{ show_purpose }}",
+                    "show_expiry": "{{ show_expiry }}",
+                    {{ if services }}
+                    "services": [
+                        {{ services }}
+                            {
+                                "name": "{{ name }}",
+                                "purpose": "{{ purpose }}",
+                                "expiry": "{{ expiry }}",
+                            },
+                        {{ /services }}
+                    ],
+                    {{ /if }}
+                    {{ /consent_banner:embed_services }}
+                }
+            {{ /if }}
+        ]
+    }
+</script>

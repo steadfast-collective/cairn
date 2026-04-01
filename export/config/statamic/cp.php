@@ -136,9 +136,11 @@ return [
     'custom_cms_name' => env('STATAMIC_CUSTOM_CMS_NAME', 'Cairn'),
 
     'custom_logo_url' => [
-        'nav' => env('STATAMIC_CUSTOM_LOGO_NAV_URL', '/assets/logo_full.svg'),
+        'nav' => env('STATAMIC_CUSTOM_LOGO_NAV_URL', '/assets/logo_light_full.svg'),
         'outside' => env('STATAMIC_CUSTOM_LOGO_OUTSIDE_URL', '/assets/logo_full.svg'),
     ],
+
+    'custom_dark_logo_url' => env('STATAMIC_CUSTOM_LOGO_NAV_URL', '/assets/logo_light_full.svg'),
 
     'custom_favicon_url' => env('STATAMIC_CUSTOM_FAVICON_URL', null),
 

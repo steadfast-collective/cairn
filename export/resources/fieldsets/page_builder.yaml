@@ -12,66 +12,64 @@ fields:
       button_label: 'Add block'
       sets:
         interactive:
-          display: Interactive
-          sets:
-            divider:
-              display: Divider
-              icon: arrows-fit-to-height
-              fields:
-                -
-                  import: block_divider
-            inline_content:
-              display: 'Inline Content'
-              icon: text-formatting-paragraph
-              instructions: 'Longform content blocks for blog text e.t.c.'
-              fields:
-                -
-                  import: block_inline_content
-            text_image:
-              display: 'Text  + Image'
-              icon: text-formatting-wrap-image-margin-right
-              fields:
-                -
-                  import: block_image_text
-            text_faqs:
-              display: 'Text + FAQs'
-              icon: alert-help-question
-              fields:
-                -
-                  import: block_text_faqs
-            text:
-              display: Text
-              icon: text-formatting-paragraph
-              instructions: 'Basic text block'
-              fields:
-                -
-                  import: block_text
-            text_form:
-              display: 'Text + Form'
-              icon: form-text-field
-              instructions: 'Text section with a form'
-              fields:
-                -
-                  import: block_text_form
-            social_share:
-              display: 'Social Share'
-              icon: social-share
-              instructions: ''
-              fields:
-                -
-                  import: block_social_share
-            consent:
-              display: Consent
-              icon: setting-slider-vertical
-              instructions: 'Block to manage user consent'
-              fields:
-                -
-                  import: block_consent
-            news_listing:
-              display: 'News Listing'
-              icon: media-news-paper
-              instructions: ''
-              fields:
-                -
-                  import: block_news_listing
+          consent:
+            display: Consent
+            icon: setting-slider-vertical
+            instructions: 'Block to manage user consent'
+            fields:
+              -
+                import: block_consent
+          divider:
+            display: Divider
+            icon: arrows-fit-to-height
+            fields:
+              -
+                import: block_divider
+          inline_content:
+            display: 'Inline Content'
+            icon: text-formatting-paragraph
+            instructions: 'Longform content blocks for blog text e.t.c.'
+            fields:
+              -
+                import: block_inline_content
+          news_listing:
+            display: 'News Listing'
+            icon: media-news-paper
+            instructions: ''
+            fields:
+              -
+                import: block_news_listing
+          social_share:
+            display: 'Social Share'
+            icon: social-share
+            instructions: ''
+            fields:
+              -
+                import: block_social_share
+          text:
+            display: Text
+            icon: text-formatting-paragraph
+            instructions: 'Basic text block'
+            fields:
+              -
+                import: block_text
+          text_faqs:
+            display: 'Text + FAQs'
+            icon: alert-help-question
+            fields:
+              -
+                import: block_text_faqs
+          text_form:
+            display: 'Text + Form'
+            icon: form-text-field
+            instructions: 'Text section with a form'
+            fields:
+              -
+                import: block_text_form
+          text_image:
+            display: 'Text  + Image'
+            icon: text-formatting-wrap-image-margin-right
+            fields:
+              -
+                import: block_image_text
       width: 100

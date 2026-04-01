@@ -46,3 +46,15 @@ tabs:
               container: images
               type: assets
               display: 'Featured Image'
+  seo:
+    display: SEO
+    sections:
+      -
+        fields:
+          -
+            handle: html_field
+            field:
+              html: '<h1>🛠️ Install a SEO Addon</h1>'
+              type: html
+              display: 'HTML Field'
+              hide_display: true

@@ -1,0 +1,71 @@
+{{# Trackers #}}
+{{ if
+    (environment == 'local' && consent_banner:trackers_local) or
+    (environment == 'staging' && consent_banner:trackers_staging) or
+    (environment == 'production' && consent_banner:trackers_production)
+}}
+    {{ if consent_banner:tracker_type == 'gtm' || consent_banner:tracker_type == 'gtag' || consent_banner:tracker_type == 'sgtm' }}
+        <script>
+            window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}
+        </script>
+    {{ /if }}
+    {{ if consent_banner:use_consent_banner && (consent_banner:tracker_type == 'gtm' || consent_banner:tracker_type == 'gtag' || consent_banner:tracker_type == 'sgtm') }}
+        <script>
+            gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'wait_for_update': 1500
+            });
+        </script>
+    {{ /if }}
+
+    {{ if consent_banner:tracker_type == 'gtm' }}
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','{{ consent_banner:google_tag_manager }}')</script>
+    {{ elseif consent_banner:tracker_type == 'gtag' }}
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ consent_banner:google_analytics }}"></script>
+        <script>gtag('js', new Date());gtag('set', new Date());gtag('config', '{{ consent_banner:google_analytics }}' {{ if consent_banner:anonymize_ip }}, {'anonymize_ip': true}{{ /if }});</script>
+    {{ elseif consent_banner:tracker_type == 'sgtm' }}
+        <script>{{ consent_banner:sgtm_script }}</script>
+    {{ elseif consent_banner:tracker_type == 'scripts' && !consent_banner:use_consent_banner }}
+        {{ consent_banner:scripts }}
+            {{ script_fragments }}
+                {{ if type == 'script_tag' }}
+                    <script {{ async ?= 'async' }} {{ defer ?= 'defer' }} src="{{ source }}" {{ script_attributes }}{{ attribute | slugify }}{{ attribute_value ?= '="{ attribute_value | entities }"' }}{{ !last ?= ' ' }}{{ /script_attributes }}></script>
+                {{ else }}
+                    <script {{ script_attributes }}{{ attribute | slugify }}{{ attribute_value ?= '="{ attribute_value | entities }"' }}{{ !last ?= ' ' }}{{ /script_attributes }}>{{ inline_script | remove_left('<script>') | remove_right('</script>') }}</script>
+                {{ /if }}
+            {{ /script_fragments }}
+        {{ /consent_banner:scripts }}
+    {{ /if }}
+
+    {{# Render this stack in all your layouts after opening the <body>. #}}
+    {{ push:seo_body }}
+        {{ if consent_banner:use_consent_banner }}
+            {{ partial:components/consent_banner }}
+        {{ /if }}
+    {{ /push:seo_body }}
+
+    {{ if consent_banner:use_google_site_verification }}
+        <meta name="google-site-verification" content="{{ consent_banner:google_site_verification }}" />
+    {{ /if }}
+
+    {{ if consent_banner:use_fathom }}
+        <script src="https://cdn.usefathom.com/script.js" site="{{ consent_banner:fathom }}" defer></script>
+    {{ /if }}
+
+    {{ if consent_banner:use_matomo }}
+        <script type="text/javascript">var _mtm = _mtm || []; _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'}); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.async=true; g.defer=true; g.src='{{ consent_banner:matomo_script_url }}'; s.parentNode.insertBefore(g,s);</script>
+    {{ /if }}
+
+    {{ if consent_banner:use_plausible && consent_banner:plausible_use_custom_script }}
+        <script src="{{ consent_banner:plausible_custom_script_url }}" data-domain="{{ consent_banner:plausible }}" defer></script>
+    {{ elseif consent_banner:use_plausible }}
+        <script src="https://plausible.io/js/script.js" data-domain="{{ consent_banner:plausible }}" defer></script>
+    {{ /if }}
+
+    {{ if consent_banner:use_cloudflare_web_analytics }}
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "{{ consent_banner:cloudflare_web_analytics }}"}'></script>
+    {{ /if }}
+{{ /if }}

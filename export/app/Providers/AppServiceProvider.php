@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use Statamic\Statamic;
+use App\Handlers\ErrorPage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use Studio1902\PeakSeo\Handlers\ErrorPage;
 
 class AppServiceProvider extends ServiceProvider
 {
