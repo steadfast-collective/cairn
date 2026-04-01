@@ -13,7 +13,7 @@
     },
     {
         "type": "vcs",
-        "url": "https://github.com/steadfast-collective/statamic-auth.git"
+        "url": "https://github.com/steadfast-collective/currency-fieldtype.git"
     }
 ]
 ```
