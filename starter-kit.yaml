@@ -12,6 +12,7 @@ export_paths:
   - app/Tags/RouteIs.php
   - app/Providers/AppServiceProvider.php
   - app/Providers/HorizonServiceProvider.php
+  - app/Handlers/ErrorPage.php
   - bootstrap/app.php
   - config/filesystems.php
   - config/auth.php
